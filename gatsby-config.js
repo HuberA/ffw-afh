@@ -3,7 +3,8 @@ require("dotenv").config({
   })
 module.exports = {
     siteMetadata: {
-        title: `Freiwillige Feuerwehr Altfraunhofen`
+        title: `Freiwillige Feuerwehr Altfraunhofen`,
+        siteUrl: 'https://wonderful-morse-21b81f.netlify.com'
     },
     plugins: [
         {
@@ -79,5 +80,11 @@ module.exports = {
                 ]
             }
         },
+        {
+            resolve: `gatsby-plugin-robots-txt`,
+            options: {
+                policy: [{userAgent: '*', disallow: ['/']}]
+            }
+        }
     ]
 }
