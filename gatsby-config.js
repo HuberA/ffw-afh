@@ -1,6 +1,3 @@
-require("dotenv").config({
-    path: `.env.${process.env.NODE_ENV}`,
-  })
 
 module.exports = {
     siteMetadata: {
@@ -22,19 +19,11 @@ module.exports = {
         'gatsby-plugin-offline',
         'gatsby-plugin-react-helmet',
         `gatsby-plugin-sharp`,
-        `gatsby-transformer-json`,
         {
             resolve: `gatsby-source-filesystem`,
             options: {
                 name: `data`,
                 path: `${__dirname}/src/data/`
-            }
-        },
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: `aktuelles`,
-                path: `${__dirname}/src/aktuelles/`
             }
         },
         {
@@ -67,6 +56,7 @@ module.exports = {
 
             }
         },
+        `gatsby-transformer-json`,
         `gatsby-transformer-sharp`,
         {
             resolve: `gatsby-transformer-remark`,
