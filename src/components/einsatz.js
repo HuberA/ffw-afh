@@ -43,7 +43,7 @@ export default ({data}) => {
     return (
         <Layout>
              <h1>{einsatz.einsatzart}</h1>
-            <Navigation previous={data.previous} next={data.next} parent="" path="einsaetze"/>
+            <Navigation previous={data.previous} next={data.next} parent="" path="einsaetze" name="Einsatz"/>
             {einsatz.einsatzbild &&
                 <Img fluid={einsatz.einsatzbild.fluid} alt={einsatz.kurzbericht} backgroundColor="#A81C1C"/>}
             <h2>{einsatz.kurzbericht}</h2>
@@ -90,7 +90,7 @@ export default ({data}) => {
             {einsatz.einsatzortGeo && 
                 <Map lat={einsatz.einsatzortGeo.lat} lng={einsatz.einsatzortGeo.lon} />
             }
-            <Navigation previous={data.previous} next={data.next} parent="" path="einsaetze"/>
+            <Navigation previous={data.previous} next={data.next} parent="" path="einsaetze" name="Einsatz"/>
         </Layout>
     )
 }

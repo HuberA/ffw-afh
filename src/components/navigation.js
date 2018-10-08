@@ -23,9 +23,9 @@ const redButton = css(
 export default (props) => (
     <div className={css`text-align: center;`}>
       {props.next &&
-      <Link className={`${css`float: left;`} ${redButton}`} to={`/${props.path}/${props.next}`}> &laquo;Vorheriger Einsatz</Link>}
+      <Link className={`${css`float: left;`} ${redButton}`} to={`/${props.path}/${props.next}`}> &laquo;`Vorheriger ${props.name}</Link>}
       {props.previous &&
-      <Link className={`${css`float: right`} ${redButton}`} to={`/${props.path}/${props.previous}`}> Nächster Einsatz &raquo;</Link>}
+      <Link className={`${css`float: right`} ${redButton}`} to={`/${props.path}/${props.previous}`}> Nächster ${props.name} &raquo;</Link>}
   
       <Link className={redButton} to={`/${props.path}/${props.parent}`}>Übersicht </Link>
     </div>

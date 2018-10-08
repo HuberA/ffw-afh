@@ -3,7 +3,7 @@ import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
 export default ( all_data ) =>{
-    const { data, pageContext } = all_data;
+    const { data } = all_data;
     return(
     <Layout>
         <h1>{data.contentfulSeitenubersicht.seitentitel}</h1>

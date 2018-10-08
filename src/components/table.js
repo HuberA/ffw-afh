@@ -7,7 +7,7 @@ export default props => (
 <thead>
     <tr>
         {props.header.map(({title, width}, index) => (
-            <th key={title} style={{"min-width": width}}>{title}</th>
+            <th key={title} style={{"minWidth": width}}>{title}</th>
         ))}
     </tr>
 </thead>

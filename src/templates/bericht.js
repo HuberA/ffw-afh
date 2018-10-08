@@ -21,7 +21,7 @@ export default ({ data, pageContext }) => {
              backgroundColor="#A81C1C"/>
              <h2 className={css`margin-top: 1em`}>{post.unteruberschrift}</h2>
             <div dangerouslySetInnerHTML={{ __html: post.fliesstext.childMarkdownRemark.html}} />
-            <Navigation path="berichte" next={next} previous={previous} parent=""/>
+            <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
         </div>
     </Layout>
     )

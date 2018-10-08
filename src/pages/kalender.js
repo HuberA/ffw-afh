@@ -21,8 +21,7 @@ export default ({ data }) =>(
             ]}
         data={data.allContentfulTermin.edges.map(({node}, index) =>{
             const datum = new Date(node.datum)
-            const next_day = new Date(datum.getFullYear(), datum.getMonth(), datum.getDay()+ 1 )
-            console.log('tomorow:', next_day)
+            const next_day = new Date(datum.getFullYear(), datum.getMonth(), datum.getDate()+1)
             if (next_day < new Date()) return null
             return {
             id: node.id,
