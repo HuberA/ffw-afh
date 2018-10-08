@@ -18,7 +18,7 @@ const EinsatzLink = props => (
 );
 
 const EinsatzTable = ({einsaetze}) => (
-    <div>
+    <div key={einsaetze[0].id} >
         <h3>Einsätze im {einsaetze[0].alarmierungszeit.toLocaleString("de-DE",  { month: 'long', year: 'numeric' })}</h3>
         <Table 
         header={[{title:'Alarmierung', width:'100px',},
