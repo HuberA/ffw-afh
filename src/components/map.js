@@ -81,6 +81,7 @@ class Map extends React.Component{
     );
   }
   onSuccess(result) {
+    console.log('result:', result)
     const route = result.response.route[0];
     this.addRouteShapeToMap(route);
     this.addSummaryToPanel(route.summary);
