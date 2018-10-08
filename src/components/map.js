@@ -6,8 +6,8 @@ import Points from "../map/points"
 
 const coreUrl = "https://js.api.here.com/v3/3.0/mapsjs-core.js"
 
-const appId = process.env.APP_ID | process.env.GATSBY_APP_ID
-const appCode = process.env.APP_CODE | process.env.GATSBY_APP_CODE
+const appId = process.env.APP_ID || process.env.GATSBY_APP_ID
+const appCode = process.env.APP_CODE || process.env.GATSBY_APP_CODE
 
 if (!appId || !appCode){
   console.log("did not find app ID")
