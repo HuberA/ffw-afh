@@ -3,12 +3,15 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Img from "gatsby-image"
 import { css } from "react-emotion"
+import Navigation from "../components/navigation"
 
 
-export default ({ data }) => {
+export default ({ data, pageContext }) => {
     console.log('got data:', data)
     const post = data.contentfulArtikel
     const titelbild = post.titelbild
+    const previous = pageContext.previous;
+    const next = pageContext.next;
     console.log('image:', titelbild)
     return (
     <Layout>
@@ -18,6 +21,7 @@ export default ({ data }) => {
              backgroundColor="#A81C1C"/>
              <h2 className={css`margin-top: 1em`}>{post.unteruberschrift}</h2>
             <div dangerouslySetInnerHTML={{ __html: post.fliesstext.childMarkdownRemark.html}} />
+            <Navigation path="berichte" next={next} previous={previous} parent=""/>
         </div>
     </Layout>
     )

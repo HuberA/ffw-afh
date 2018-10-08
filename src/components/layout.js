@@ -93,7 +93,6 @@ class Layout extends React.Component{
         this.handleMenuClick = this.handleMenuClick.bind(this);
     }
     handleMenuClick(){
-        console.log('handle menu called: ', this.state)
         this.setState(state => ({
             showMenu: !state.showMenu
         }));
@@ -115,7 +114,6 @@ class Layout extends React.Component{
 
     }
     render(){
-      console.log('state:', this.state, 'display value: ',(this.state.showMenu)?'display: none;':'')
       return (
   <StaticQuery
    query={graphql`

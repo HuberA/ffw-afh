@@ -24,6 +24,9 @@ query($slug: String!){
     markdownRemark(fields: {slug: {eq: $slug}}) {
           frontmatter{
             title
+            subtitle
+            date
+            image
           }
           fields {
             slug

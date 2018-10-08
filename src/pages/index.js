@@ -3,12 +3,12 @@ import Layout from "../components/layout"
 import img_lf16 from "../images/lf16.jpg"
 import img_mfz from "../images/mzf.jpg"
 import img_fwhaus from "../images/fwhaus.jpg"
-import img_einsatz from "../images/einsatz.jpg"
 import { css } from "react-emotion"
 import { graphql, Link } from "gatsby"
 import { color as textColor } from "../utils/typography"
 import AktuellesList from "../components/aktuelles_list"
 import Divider from "../utils/divider"
+import Img from "gatsby-image"
 
 const headingImageFormat = align => css`
 border-radius: 4px;
@@ -57,11 +57,10 @@ export default ( {data}) => {
         overflow: auto;
     `}>
         <h3>Letzte Einsätze</h3>
-         {nodes.map( node => {
-             const n = node.node
-             const image = (n.Bilder.length > 0)?n.Bilder[0].image:img_einsatz;
+         {nodes.map( ({node}) => {
+             const image = node.einsatzbild || data.einsatz_img.childImageSharp;
              return(
-                <Link to={`/einsaetze/${n.id}`} key={n.id} className={css`
+                <Link to={`/einsaetze/${node.id}`} key={node.id} className={css`
                 text-decoration:none;
                 color: ${textColor};
                 `}>
@@ -78,19 +77,19 @@ export default ( {data}) => {
                 }
                 
                 `}>
-                    {image && <img className={css`
+                    <Img className={css`
                         margin: 0 auto;
                         border-radius: 50%;
                         height: 150px;
                         width: 150px;
                         object-fit: cover;
-                    `} src={image} alt={n.Kurzbericht}></img>}
-                    <h3 className={css`margin-bottom: 0;`} >{n.Kurzbericht}</h3>
+                    `} fixed={image.fixed} alt={node.Kurzbericht}></Img>
+                    <h3 className={css`margin-bottom: 0;`} >{node.kurzbericht}</h3>
                     <p className={css`color:gray;`}>
                        
-                        {new Date(n.Alarmierung.zeitpunkt).toLocaleString("de-DE", formatOptions)}
+                        {new Date(node.alarmierungszeit).toLocaleString("de-DE", formatOptions)}
                     </p>
-                    <p>{n.Einsatzbericht[0]}</p>
+                    <p>{node.einsatzbericht.childMarkdownRemark.excerpt}</p>
                     <div className={redButton}>Mehr Details &raquo;</div>
                     <p/>
                 </div>
@@ -109,27 +108,28 @@ export default ( {data}) => {
 }
 export const query = graphql`
 query {
-    einsatz: 
-     allData1Json(sort: {fields: [Alarmierung___zeitpunkt],  order: DESC}
-   filter: {Alarmierung: {zeitpunkt: {ne: null}} }
-   limit: 3
-   ) {
-       edges {
-         node {
-           id
-         Alarmierung{
-           zeitpunkt
-         }
-         Einsatzart 
-         Kurzbericht
-         Einsatzort
-         Einsatzbericht
-         Bilder{
-             image
-         }
-         }
-       }
-     }
+    einsatz: allContentfulEinsatz(sort: {fields: [alarmierungszeit], order: DESC}, limit: 3) {
+        edges {
+          node {
+            id
+            alarmierungszeit
+            einsatzart
+            kurzbericht
+            einsatzort
+            einsatzbericht {
+                childMarkdownRemark {
+                  excerpt
+                }
+              }
+            einsatzbild {
+              id
+              fixed(width: 150, height: 150) {
+                ...GatsbyContentfulFixed_tracedSVG
+              }
+            }
+          }
+        }
+      }
      berichte:
      allContentfulArtikel(
         sort: {fields: [datum] order: DESC}
@@ -154,6 +154,17 @@ query {
           }
         }
       }
+      
+      einsatz_img:file(relativePath: {eq: "einsatz.jpg"}) {
+          childImageSharp {
+            fixed(width: 150, height: 150) {
+                ...GatsbyImageSharpFixed_tracedSVG
+            }
+          }
+        }
+      
+      
+      
    
  }
 `

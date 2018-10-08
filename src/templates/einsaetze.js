@@ -84,14 +84,26 @@ export default ({ data, pageContext }) =>  {
             einsatzbild: node.einsatzbild
         }
     )):[];
-    const mappedOld =(data.old_data)?data.old_data.edges.map(({node}, index) => 
-    ({
+    const mappedOld =(data.old_data)?data.old_data.edges.map(({node}, index) => {
+        var image = null;
+        if (node.Bilder.length > 0){
+            console.log('node.Bilder', node.Bilder)
+            const bild = node.Bilder[0]
+            const images = data.old_images.edges.filter(({node}) => node.relativePath == `images/${bild}`)
+            if (images.length > 0){
+                image = images[0].node.childImageSharp
+                console.log('image:', image)
+                }
+        }
+        
+    return({
         id: node.id,
         kurzbericht: node.Kurzbericht,
         alarmierungszeit: new Date(node.Alarmierung.zeitpunkt),
         einsatzort: node.Einsatzort,
         einsatzart: node.Einsatzart,
-    })):[];
+        einsatzbild: image
+    })}):[];
 
     const all_data = mappedNew.concat(mappedOld) 
     // group by month
@@ -140,9 +152,7 @@ query ($yearExp: String!) {
           }
           Einsatzort
           Einsatzart
-          Bilder {
-            image
-          }
+          Bilder
         }
         next {
           id
@@ -152,6 +162,23 @@ query ($yearExp: String!) {
         }
       }
     }
+    old_images: 
+        allFile(filter: {sourceInstanceName: {eq: "data"} relativePath: {regex: "/images\//"}}) {
+          edges {
+            node {
+              id
+              sourceInstanceName
+              relativePath
+              childImageSharp {
+                fixed(width: 50) {
+                  ...GatsbyImageSharpFixed_tracedSVG
+                }
+              }
+            }
+          }
+        }
+      
+      
     new_data: allContentfulEinsatz(sort: {fields: [alarmierungszeit], order: DESC}, 
         filter: {alarmierungszeit: {regex: $yearExp}}) {
       edges {

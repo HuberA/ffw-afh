@@ -2,7 +2,9 @@ import React from "react"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
-export default ( {data} ) =>(
+export default ( all_data ) =>{
+    const { data, pageContext } = all_data;
+    return(
     <Layout>
         <h1>{data.contentfulSeitenubersicht.seitentitel}</h1>
         {data.contentfulSeitenubersicht.seiteneintrag.map((eintrag, index) => (
@@ -12,7 +14,7 @@ export default ( {data} ) =>(
             </div>
         ))}
     </Layout>
-)
+)}
 
 export const query = graphql`
 query($seite: String!){

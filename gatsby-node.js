@@ -32,18 +32,29 @@ exports.createPages = ({ graphql, actions}) => {
               edges {
                 node {
                   id
+                  Bilder
+                }
+                previous{
+                    id
+                }
+                next{
+                    id
                 }
               }
             }
           }
         `).then( result => {
             if (result.data && result.data.allData1Json){
-                result.data.allData1Json.edges.forEach(({ node }) => {
+                result.data.allData1Json.edges.forEach(({ node, previous, next }) => {
+                    const bild = (node.Bilder)?`images/${node.Bilder[0]}`:''
                     createPage({
                         path: `/einsaetze/${node.id}`,
                         component: path.resolve(`./src/templates/einsatz.js`),
                         context: {
-                            id: node.id
+                            id: node.id,
+                            bild: bild,
+                            previous: previous && previous.id,
+                            next: next && next.id
                         }
                     })
                 })
@@ -266,8 +277,8 @@ exports.createPages = ({ graphql, actions}) => {
                 const gruppe_str = node.gruppe ? node.gruppe.map((gruppe, index) => (
                     gruppe.replace(/Gruppe (\w)/, '$1').replace('Jugend', 'J')
                 )).join(', ') + ': ': ''
-                const start = moment(node.datum);
-                const end = node.ende ? moment(node.ende): moment(node.datum).add(1, 'hour');
+                const start = moment.tz(node.datum, 'Europe/Berlin');
+                const end = node.ende ? moment.tz(node.ende, 'Europe/Berlin'): moment.tz(node.datum, 'Europe/Berlin').add(1, 'hour');
                 const event = cal.createEvent({
                     start: start,
                     end: end,
