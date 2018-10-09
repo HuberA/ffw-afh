@@ -4,7 +4,6 @@ import Layout from "../components/layout"
 
 
 export default ({ data }) => {
-    console.log('got data:', data)
     const post = data.markdownRemark
     return (
     <Layout>

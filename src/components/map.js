@@ -10,7 +10,7 @@ const appId = process.env.APP_ID || process.env.GATSBY_APP_ID
 const appCode = process.env.APP_CODE || process.env.GATSBY_APP_CODE
 
 if (!appId || !appCode){
-  console.log("did not find app ID")
+  console.error("did not find app ID")
 }
 
 const urls = [
@@ -85,7 +85,6 @@ class Map extends React.Component{
     );
   }
   onSuccess(result) {
-    console.log('result:', result)
     const route = result.response.route[0];
     this.addRouteShapeToMap(route);
     this.addSummaryToPanel(route.summary);
@@ -93,7 +92,7 @@ class Map extends React.Component{
     this.addEndPoint({lat:this.props.lat, lng: this.props.lng})
   }
   onError(error) {
-    console.log('error while routing', error)
+    console.error('error while routing', error)
   }
   addRouteShapeToMap(route){
     const strip = new this.H.geo.Strip(),

@@ -5,8 +5,8 @@ import favicon from "../images/logo-ffw.svg"
 
 
 export default props => {
-    const title = (props.title.length > 35)? props.title.substring(0, 35): props.title
-    const title_long = (props.title.length > 65)? props.title.substring(0,65): props.title
+    const title =(props.title) && (props.title.length > 35)? props.title.substring(0, 35): props.title
+    const title_long =(props.title) && (props.title.length > 65)? props.title.substring(0,65): props.title
     return(
         <Helmet
             htmlAttributes={{

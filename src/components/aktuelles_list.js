@@ -7,7 +7,6 @@ import Img from "gatsby-image"
 const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 export default ( props ) => {
-    console.log('props:', props);
     return(
         <div className={css`
             overflow: auto;

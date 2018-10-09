@@ -10,7 +10,6 @@ exports.onCreateNode = ({node, getNode, actions}) => {
     if (node.internal.type === `MarkdownRemark`){
         if(node.fileAbsolutePath){
             const path = node.fileAbsolutePath.match(/src\/pages/)?'':'/aktuelles';
-            console.log('file path:', path)
             const slug = createFilePath({node, getNode, basePath: `src${path}`})
             createNodeField({
                 node,
@@ -298,9 +297,8 @@ exports.createPages = ({ graphql, actions}) => {
             })
             fs.writeFile(cal_path, cal.toString(), function(err) {
                 if (err){
-                    return console.log(err);
+                    return console.error(err);
                 }
-                console.log("the file was saved");
             })
             resolve()
         })

@@ -39,8 +39,6 @@ export default ( all_data ) => {
         previous: previous,
         einsatz: new_einsatz
     }
-    console.log("bilder:", einsatz.Bilder)
-    //const image = (einsatz.Bilder && einsatz.Bilder.length > 0)?einsatz.Bilder[0]:null;
     return (
         <Einsatz data={new_data} />
     )

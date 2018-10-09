@@ -87,12 +87,10 @@ export default ({ data, pageContext }) =>  {
     const mappedOld =(data.old_data)?data.old_data.edges.map(({node}, index) => {
         var image = null;
         if (node.Bilder.length > 0){
-            console.log('node.Bilder', node.Bilder)
             const bild = node.Bilder[0]
             const images = data.old_images.edges.filter(({node}) => node.relativePath === `images/${bild}`)
             if (images.length > 0){
                 image = images[0].node.childImageSharp
-                console.log('image:', image)
                 }
         }
         

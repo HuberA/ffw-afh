@@ -23,7 +23,7 @@ export default ({data}) => {
             <td>Alarmierte Einheiten:</td><td>{feuerwehren[0].node.name}</td>
         </tr>
         {
-            feuerwehren.slice(1).map(({node}, index) =>{ console.log(node); return (
+            feuerwehren.slice(1).map(({node}, index) =>{ return (
                 <tr key={node.id}>
                     <td></td><td>{node.name}</td>
                 </tr>
@@ -34,7 +34,7 @@ export default ({data}) => {
             <td>Alarmierte Einheiten:</td><td>{einsatz.alarmierte_einheiten[0].text}</td>
         </tr>
         {
-            einsatz.alarmierte_einheiten.slice(1).map(({text}, index) =>{ console.log(text); return (
+            einsatz.alarmierte_einheiten.slice(1).map(({text}, index) =>{ return (
                 <tr key={index}>
                     <td></td><td>{text}</td>
                 </tr>
@@ -42,9 +42,9 @@ export default ({data}) => {
         }
     </>:"");
     const description_short = (einsatz.einsatzbericht)?einsatz.childContentfulEinsatzEinsatzberichtTextNode.childMarkdownRemark.excerpt:
-        (einsatz.einsatzbericht_text)?einsatz.einsatzbericht_text[0].substring(0, 35):null
+        (einsatz.einsatzbericht_text && einsatz.einsatzbericht_text[0])?einsatz.einsatzbericht_text[0].substring(0, 35):null
     const description_long = (einsatz.einsatzbericht)?einsatz.childContentfulEinsatzEinsatzberichtTextNode.childMarkdownRemark.excerpt2:
-    (einsatz.einsatzbericht_text)?einsatz.einsatzbericht_text[0].substring(0, 65):null
+    (einsatz.einsatzbericht_text && einsatz.einsatzbericht_text[0])?einsatz.einsatzbericht_text[0].substring(0, 65):null
     const image = (einsatz.einsatzbild)?einsatz.einsatzbild.fixed.src:null
     return (
         <Layout>
