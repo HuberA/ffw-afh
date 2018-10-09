@@ -39,6 +39,9 @@ query ($id: String!) {
         fluid(maxWidth: 1000){
           ...GatsbyContentfulFluid_tracedSVG
         }
+        fixed(width: 600){
+          src
+        }
       }
       mannschatfsstaerke
       einsatzortGeo {
@@ -52,6 +55,8 @@ query ($id: String!) {
         id
         childMarkdownRemark {
           html
+          excerpt(pruneLength: 155)
+          excerpt2: excerpt(pruneLength: 65)
         }
       }
       presselink

@@ -53,6 +53,9 @@ query ($id: String!, $bild: String!) {
         fluid(maxWidth: 1000){
           ...GatsbyImageSharpFluid_tracedSVG
         }
+        fixed(width: 600){
+          src
+        }
       }
     }
     data1Json(id: {eq: $id}) {

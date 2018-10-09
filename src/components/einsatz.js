@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import Img from "gatsby-image"
 import Map from "../components/map"
 import Navigation from "../components/navigation"
+import Seo from "../components/seo"
 
 const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
 const formatTime = {hour: 'numeric', minute: 'numeric'}
@@ -40,8 +41,18 @@ export default ({data}) => {
             )})
         }
     </>:"");
+    const description_short = (einsatz.einsatzbericht)?einsatz.childContentfulEinsatzEinsatzberichtTextNode.childMarkdownRemark.excerpt:
+        (einsatz.einsatzbericht_text)?einsatz.einsatzbericht_text[0].substring(0, 35):null
+    const description_long = (einsatz.einsatzbericht)?einsatz.childContentfulEinsatzEinsatzberichtTextNode.childMarkdownRemark.excerpt2:
+    (einsatz.einsatzbericht_text)?einsatz.einsatzbericht_text[0].substring(0, 65):null
+    const image = (einsatz.einsatzbild)?einsatz.einsatzbild.fixed.src:null
     return (
         <Layout>
+            <Seo title={einsatz.kurzbericht} 
+                 description_short={description_short}
+                 description_long={description_long}
+                 image={image} 
+                 url="http://feuerwehr-altfrauhofen.de"/>
              <h1>{einsatz.einsatzart}</h1>
             <Navigation previous={data.previous} next={data.next} parent="" path="einsaetze" name="Einsatz"/>
             {einsatz.einsatzbild &&

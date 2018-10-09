@@ -4,17 +4,23 @@ import Layout from "../components/layout"
 import Img from "gatsby-image"
 import { css } from "react-emotion"
 import Navigation from "../components/navigation"
+import Seo from "../components/seo"
 
 
 export default ({ data, pageContext }) => {
-    console.log('got data:', data)
     const post = data.contentfulArtikel
     const titelbild = post.titelbild
     const previous = pageContext.previous;
     const next = pageContext.next;
-    console.log('image:', titelbild)
+    const id = pageContext.id;
+    const image = (titelbild)?titelbild.fixed.src:null
     return (
     <Layout>
+      <Seo title={post.titel} 
+           description_short={post.unteruberschrift}
+                 description_long={post.unteruberschrift}
+                 image={image} 
+                 url={`http://feuerwehr-altfrauhofen.de/berichte/${id}`}/>
         <div>
             <h1>{post.titel}</h1>
             <Img fluid={titelbild.fluid}
@@ -39,11 +45,16 @@ query($id: String!){
         childMarkdownRemark {
           id
           html
+          excerpt(pruneLength: 155)
+          excerpt2: excerpt(pruneLength: 65)
         }
     }
     titelbild {
             fluid(maxWidth: 1000){
               ...GatsbyContentfulFluid_tracedSVG
+            }
+            fixed(width: 600){
+              src
             }
           }
     
