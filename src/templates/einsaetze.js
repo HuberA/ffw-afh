@@ -6,6 +6,7 @@ import { css } from "react-emotion"
 import { color as textColor } from "../utils/typography"
 import Img from "gatsby-image"
 import styles from "./dropdown.module.css"
+import Seo from "../components/seo"
 
 const EinsatzLink = props => (
     <Link to={`/einsaetze/${props.id}`} className={css`
@@ -126,8 +127,14 @@ export default ({ data, pageContext }) =>  {
         table_list.push(<EinsatzTable einsaetze={einsaetze}/>)
         yearsSet.add(einsaetze[0].alarmierungszeit.getFullYear())
     }
+    const year = yearsSet.values().next().value;
+    const description = `Einsätze im Jahr ${year}`
     return (
         <Layout> 
+            <Seo title={`Einsätze ${year} - Feuerwehr Altfraunhofen`} 
+                 description_short={description}
+                 description_long={description} 
+                 url="http://feuerwehr-altfrauhofen.de"/>
             <h1>Einsätze</h1>
             <Dropdown options={pageContext.allYears} selected={pageContext.year} />
             {table_list}

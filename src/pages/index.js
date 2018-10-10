@@ -9,6 +9,7 @@ import { color as textColor } from "../utils/typography"
 import AktuellesList from "../components/aktuelles_list"
 import Divider from "../utils/divider"
 import Img from "gatsby-image"
+import Seo from "../components/seo"
 
 const headingImageFormat = align => css`
 border-radius: 4px;
@@ -30,11 +31,16 @@ display: inline-block;
 
 
 const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
+const description = "Offizielle Website der Freiwilligen Feuerwehr Altfrauhofen"
 export default ( {data}) => {
     const nodes =  data.einsatz.edges
     const berichte = data.berichte.edges
    return (<Layout>
+      <Seo title={`Freiwillige Feuerwehr Altfraunhofen e.V.`} 
+                 description_short={description}
+                 description_long={description}
+                 image={img_fwhaus}
+                 url="http://feuerwehr-altfrauhofen.de"/>
     <div className={css`
     text-align: center
     `}>

@@ -48,7 +48,7 @@ export default ({data}) => {
     const image = (einsatz.einsatzbild)?einsatz.einsatzbild.fixed.src:null
     return (
         <Layout>
-            <Seo title={einsatz.kurzbericht} 
+            <Seo title={`${einsatz.kurzbericht} - ${einsatz.einsatzart}`} 
                  description_short={description_short}
                  description_long={description_long}
                  image={image} 
