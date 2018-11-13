@@ -18,29 +18,18 @@ export default ({data}) => {
     const einsatzdauer_h = Math.trunc(einsatzdauer_min / 60);
     const einsatzdauer_min_rem = einsatzdauer_min - 60 * einsatzdauer_h;
     const einsatzdauer_str = (einsatzdauer_h)?`${einsatzdauer_h} Std. und ${einsatzdauer_min_rem} Min.`:`${einsatzdauer_min} Minuten`
-    const alarmierte_einheiten = (feuerwehren)?<>
+    const alarmierte_einheiten = (typeof einsatz.alarmierte_einheiten !== 'undefined' && einsatz.alarmierte_einheiten.length > 0)?<>
         <tr>
-            <td>Alarmierte Einheiten:</td><td>{feuerwehren[0].node.name}</td>
+            <td>Alarmierte Einheiten:</td><td>{einsatz.alarmierte_einheiten[0].name}</td>
         </tr>
         {
-            feuerwehren.slice(1).map(({node}, index) =>{ return (
-                <tr key={node.id}>
-                    <td></td><td>{node.name}</td>
-                </tr>
-            );})
-        }
-    </>:((typeof einsatz.alarmierte_einheiten !== 'undefined' && einsatz.alarmierte_einheiten.length > 0)?<>
-        <tr>
-            <td>Alarmierte Einheiten:</td><td>{einsatz.alarmierte_einheiten[0].text}</td>
-        </tr>
-        {
-            einsatz.alarmierte_einheiten.slice(1).map(({text}, index) =>{ return (
+            einsatz.alarmierte_einheiten.slice(1).map(({name}, index) =>{ return (
                 <tr key={index}>
-                    <td></td><td>{text}</td>
+                    <td></td><td>{name}</td>
                 </tr>
             )})
         }
-    </>:"");
+    </>:"";
     const description_short = (einsatz.einsatzbericht)?einsatz.childContentfulEinsatzEinsatzberichtTextNode.childMarkdownRemark.excerpt:
         (einsatz.einsatzbericht_text && einsatz.einsatzbericht_text[0])?einsatz.einsatzbericht_text[0].substring(0, 35):null
     const description_long = (einsatz.einsatzbericht)?einsatz.childContentfulEinsatzEinsatzberichtTextNode.childMarkdownRemark.excerpt2:

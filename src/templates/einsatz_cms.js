@@ -60,13 +60,9 @@ query ($id: String!) {
         }
       }
       presselink
-    }
-    feuerwehren: allContentfulFeuerwehren(filter: {einsatz: {id: {eq: $id}}}) {
-      edges {
-        node {
-          id
-          name
-        }
+      alarmierteEinheiten{
+        id
+        name
       }
     }
   }

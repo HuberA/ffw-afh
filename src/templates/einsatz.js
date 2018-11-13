@@ -73,7 +73,7 @@ query ($id: String!, $bild: String!) {
         text
       }
       alarmierte_Einheiten {
-        text
+        name: text
       }
       Einsatzbericht
       Bilder
