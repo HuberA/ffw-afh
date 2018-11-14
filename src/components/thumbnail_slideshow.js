@@ -29,9 +29,9 @@ class Slideshow extends React.Component{
             <div className={styles.prev} onClick={(e) => this.plusSlides(-1)}>❮</div>
             <div className={styles.next} onClick={(e) => this.plusSlides(1)}>❯</div>
           
-            <div className={styles.captioncontainer}>
+            {this.props.images[this.state.slideIndex].title && <div className={styles.captioncontainer}>
               <p id="caption">{this.props.images[this.state.slideIndex].title}</p>
-            </div>
+            </div>}
           
             <div className={styles.row}>
             {this.props.images.map((img, index) => { return (
