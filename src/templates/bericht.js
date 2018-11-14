@@ -5,7 +5,9 @@ import Img from "gatsby-image"
 import { css } from "react-emotion"
 import Navigation from "../components/navigation"
 import Seo from "../components/seo"
+import ThumbnailSlideshow from "../components/thumbnail_slideshow"
 
+const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 export default ({ data, pageContext }) => {
     const post = data.contentfulArtikel
@@ -14,6 +16,10 @@ export default ({ data, pageContext }) => {
     const next = pageContext.next;
     const id = pageContext.id;
     const image = (titelbild)?titelbild.fixed.src:null
+    const images = (post.bilder)?post.bilder.slice():null
+    if (images){
+    images.unshift(titelbild)
+    }
     return (
     <Layout>
       <Seo title={post.titel} 
@@ -22,9 +28,14 @@ export default ({ data, pageContext }) => {
                  image={image} 
                  url={`http://feuerwehr-altfrauhofen.de/berichte/${id}`}/>
         <div>
+            <p className={css`color:gray;`}>
+                    {new Date(post.datum).toLocaleString("de-DE", formatOptions)}
+            </p>
             <h1>{post.titel}</h1>
-            <Img fluid={titelbild.fluid}
-             backgroundColor="#A81C1C"/>
+            {(images)?
+               <ThumbnailSlideshow images={images}/>:
+               <Img fluid={titelbild.fluid} backgroundColor="#A81C1C"/>
+            }
              <h2 className={css`margin-top: 1em`}>{post.unteruberschrift}</h2>
             <div dangerouslySetInnerHTML={{ __html: post.fliesstext.childMarkdownRemark.html}} />
             <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
@@ -53,11 +64,23 @@ query($id: String!){
             fluid(maxWidth: 1000){
               ...GatsbyContentfulFluid_tracedSVG
             }
+            thumb:fluid(maxWidth: 170){
+              ...GatsbyContentfulFluid_tracedSVG
+            }
             fixed(width: 600){
               src
             }
           }
-    
+    bilder{
+      title
+      description
+      thumb:fluid(maxWidth: 170){
+        ...GatsbyContentfulFluid_tracedSVG
+      }
+      fluid(maxWidth: 1000){
+        ...GatsbyContentfulFluid_tracedSVG
+      }
     }
   }
+}
 `

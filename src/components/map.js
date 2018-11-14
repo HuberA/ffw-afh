@@ -64,7 +64,7 @@ class Map extends React.Component{
     }else{
       this.addFWHausIcon();
       this.addEinsatzbereich();  
-      const behavior = new this.H.mapevents.Behavior(new this.H.mapevents.MapEvents(this.map));
+      new this.H.mapevents.Behavior(new this.H.mapevents.MapEvents(this.map));
     }
   }
   calculateRouteFromAtoB () {

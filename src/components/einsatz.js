@@ -10,7 +10,6 @@ const formatTime = {hour: 'numeric', minute: 'numeric'}
 
 export default ({data}) => {
     const einsatz = data.einsatz;
-    const feuerwehren = data.feuerwehren && data.feuerwehren.edges;
     const alarmierung = new Date(einsatz.alarmierungszeit);
     const einsatzende = new Date(einsatz.einsatzende);
     const einsatzdauer = einsatzende - alarmierung;
