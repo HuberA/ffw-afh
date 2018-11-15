@@ -19,10 +19,11 @@ class Slideshow extends React.Component{
     render(){
         return(
             <div className={styles.container}>
-            {this.props.images.map((image, index) =>{ return (
+            {this.props.images.map((image, index) =>{ 
+                return (
                 <div className={styles.mySlides} style={{display:(index===this.state.slideIndex)?'block':'none'}} key={index}>
                 <div className={styles.numbertext}>{index+1} / {this.props.images.length}</div>
-                <Img fluid={image.fluid} alt={image.title} backgroundColor="#A81C1C"/>
+                <img src={image.fluid.src} alt={image.title} style={{display: "block", marginLeft: "auto", marginRight: "auto"}}/>
               </div>
             )})}
               

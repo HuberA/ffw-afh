@@ -28,6 +28,7 @@ export default ({ data, pageContext }) => {
                  image={image} 
                  url={`http://feuerwehr-altfrauhofen.de/berichte/${id}`}/>
         <div>
+        <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
             <p className={css`color:gray;`}>
                     {new Date(post.datum).toLocaleString("de-DE", formatOptions)}
             </p>
