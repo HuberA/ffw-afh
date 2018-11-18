@@ -256,6 +256,7 @@ exports.createPages = ({ graphql, actions}) => {
                     anmerkungen
                   }
                   ende
+                  feuerwehrhausHeizen
                 }
               }
             }
@@ -269,6 +270,18 @@ exports.createPages = ({ graphql, actions}) => {
                 name: 'Feuerwehr Terminkalender',
                 timezone: 'Europe/Berlin'
             });
+            const calFwhaus = ical(cal.toJSON());
+            const allUsedGroups = [].concat.apply([], result.data.allContentfulTermin.edges.map(({node}, index) => node.gruppe)); 
+            const uniqueGroups = Array.from(new Set(allUsedGroups).values());
+            const relevantGroups = uniqueGroups.filter( value => /(Gruppe (\w)|Jugend)/.test(value)) 
+            const cals = relevantGroups.map(group => [group, ical({
+                domain: 'feuerwehr-altfraunhofen.de',
+                prodId: {company: 'Feuerwehr Altfraunhofen', product: 'fw ical-generator'},
+                name: `Feuerwehr Terminkalender ${group}`,
+                timezone: 'Europe/Berlin'
+            })])
+            const calMap = new Map(cals)
+
             result.data.allContentfulTermin.edges.forEach(({ node }) => {
                 const anmerkung = node.anmerkungen ? node.anmerkungen.anmerkungen: ""
                 const gruppe_str_lang = node.gruppe ? ((node.gruppe.length == 1)?'Gruppe: ':'Gruppen: ')
@@ -293,12 +306,46 @@ exports.createPages = ({ graphql, actions}) => {
                     trigger: 3600, // 1h before event
                 });
                 event.createCategory({name: node.kategorie})
+                const relevanteGruppen = node.gruppe? node.gruppe.filter ( value =>  /(Gruppe (\w)|Jugend)/.test(value)): relevantGroups;
+                relevanteGruppen.forEach(group => {
+                    const cale = calMap.get(group);
+                    cale.createEvent(event.toJSON());
+                });
+                if (node.feuerwehrhausHeizen){
+                    calFwhaus.createEvent(event.toJSON())
+                }
+
     
             })
             fs.writeFile(cal_path, cal.toString(), function(err) {
                 if (err){
                     return console.error(err);
                 }
+            })
+            calMap.forEach((cal, name) => {
+                const cName = name.replace(/Gruppe (\w)/, '$1').replace('Jugend', 'J').toLowerCase();
+                const calpath = path.posix.join(process.cwd(), DEPLOY_DIR, `ffw${cName}.ics`)
+                fs.writeFile(calpath, cal.toString(), function(err) {
+                    if (err){
+                        return console.error(err);
+                    }
+                })
+            })
+            calFWhausPath = path.posix.join(process.cwd(), DEPLOY_DIR, 'fwhaus.ics')
+            fs.writeFile(calFWhausPath, calFwhaus.toString(), function(err) {
+                if (err){
+                    return console.log(err);
+                }
+            })
+            
+            result.data.allContentfulTermin.edges.forEach(({ node }) => {
+                createPage({
+                    path: `/termine/${node.id}/`,
+                    component: path.resolve(`./src/templates/termin.js`),
+                    context: {
+                        id: node.id
+                    }
+                })
             })
             resolve()
         })

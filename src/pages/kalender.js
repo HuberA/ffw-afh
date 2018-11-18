@@ -1,33 +1,46 @@
 import React from "react"
 import Layout from "../components/layout"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import Table from "../components/table"
 import Popup from "../components/popup"
 import { css } from "react-emotion"
+import { color as textColor } from "../utils/typography"
 
 
 const dayFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
 const timeFormatOptions = {hour: '2-digit', minute: '2-digit'};
+
+const TerminLink = props => (
+    <Link to={`/termine/${props.id}`} className={css`
+        text-decoration:none;
+        color: ${textColor};
+        margin-bottom: 0;
+    `}>
+        {props.children}
+    </Link>
+);
 
 export default ({ data }) =>(
     <Layout>
         <h1>Kalender</h1>
         <Table 
         header={[{title:'Datum', width:'100px',},
-                {title: 'Gruppe', width: '101px'},
+                {title: 'Gruppe' },
                 {title: 'Beschreibung', },
                 {title: 'Veranstaltungsort'},
-                {title:'Kategorie'}
+                {title:'Kategorie'},
+                {title: 'Beschreibung'}
             ]}
         data={data.allContentfulTermin.edges.map(({node}, index) =>{
             const datum = new Date(node.datum)
             const next_day = new Date(datum.getFullYear(), datum.getMonth(), datum.getDate()+1)
             if (next_day < new Date()) return null
+            const groupText = node.gruppe? node.gruppe.join(', ') + ': ': ''
             return {
             id: node.id,
             data:
             [ 
-                <div>
+                <TerminLink id={node.id}>
                 {(
                 <>
                 <p className={css`margin-bottom: 0`}>{datum.toLocaleString("de-DE", dayFormatOptions)}</p>  
@@ -35,24 +48,32 @@ export default ({ data }) =>(
                 </>
                 )
                 }
-                </div>
+                </TerminLink>
             ,
-                <div>
+                <TerminLink id={node.id}>
                 {node.gruppe? node.gruppe.map((gruppe, index) => (
                     <p className={css`margin-bottom: 0`} key={gruppe}>{gruppe}</p>
                 )):'Alle'}
-                </div>
+                </TerminLink>
             ,
-                <div>
+                <TerminLink id={node.id}>
                    {node.beschreibung}
-                </div>
+                </TerminLink>
             , 
-                <div>{node.veranstaltungsort}</div>
+                <TerminLink id={node.id}>{node.veranstaltungsort}</TerminLink>
             ,
-                <div>{node.kategorie}</div>
+                <TerminLink id={node.id}>{node.kategorie}</TerminLink>
+            ,
+                <TerminLink id={node.id}>{groupText + node.beschreibung}</TerminLink>
             ]    
 
-        }})}/>
+        }})}
+        columnsFilter={width => (width > 720)? [0, 1, 2, 3, 4]: 
+                                (width > 620)? [0, 1, 2, 3]:
+                                (width > 420)? [0, 1, 2]:
+                                [0, 5]
+                            }
+        />
         <Popup/>
     </Layout>
 )
@@ -66,7 +87,6 @@ export const query = graphql`
           datum
           beschreibung
           kategorie
-          beschreibung
           veranstaltungsort
           gruppe
         }

@@ -16,7 +16,7 @@ export default ({ data, pageContext }) => {
     const next = pageContext.next;
     const id = pageContext.id;
     const image = (titelbild)?titelbild.fixed.src:null
-    const images = (post.bilder)?post.bilder.slice():null
+    const images = (post.bilder)?post.bilder.slice():[]
     if (images){
     images.unshift(titelbild)
     }
@@ -33,11 +33,8 @@ export default ({ data, pageContext }) => {
                     {new Date(post.datum).toLocaleString("de-DE", formatOptions)}
             </p>
             <h1>{post.titel}</h1>
-            {(images)?
-               <ThumbnailSlideshow images={images}/>:
-               <Img fluid={titelbild.fluid} backgroundColor="#A81C1C"/>
-            }
-             <h2 className={css`margin-top: 1em`}>{post.unteruberschrift}</h2>
+            <ThumbnailSlideshow images={images}/>:
+            <h2 className={css`margin-top: 1em`}>{post.unteruberschrift}</h2>
             <div dangerouslySetInnerHTML={{ __html: post.fliesstext.childMarkdownRemark.html}} />
             <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
         </div>
@@ -75,10 +72,10 @@ query($id: String!){
     bilder{
       title
       description
-      thumb:fluid(maxWidth: 170){
+      thumb:fluid(maxWidth: 170, maxHeight: 100,resizingBehavior:PAD, background:"white"){
         ...GatsbyContentfulFluid_tracedSVG
       }
-      fluid(maxWidth: 1000){
+      fluid(maxWidth: 1000, maxHeight: 700){
         ...GatsbyContentfulFluid_tracedSVG
       }
     }

@@ -19,7 +19,6 @@ const redButton = css(
     transition: 0.1s
     `);
 
-
 export default (props) => (
     <div className={css`text-align: center;`}>
       {props.next &&

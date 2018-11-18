@@ -35,7 +35,7 @@ const BottomLink = props => (
     <div className={css`
         float: left;
         margin: 20px;
-        width: ${rhythm(8)};
+        width: ${rhythm(10)};
         margin-bottom: 0;
         `}>
           <Link className={css`
@@ -135,6 +135,8 @@ class Layout extends React.Component{
                 ...GatsbyImageSharpFixed_tracedSVG
             }
         }
+        
+          
     }
    `
   }
@@ -262,7 +264,7 @@ class Layout extends React.Component{
         float: left;
         margin-bottom: 0;
         width: ${rhythm(8)};
-        text-align: left;
+        text-align: center;
       `}>
         <Img fixed={data.image_florian_grau.fixed} alt="florian" className={css`margin-bottom: 0;`}/>
         <p className={css`margin-bottom: 0;`}/>
@@ -271,6 +273,7 @@ class Layout extends React.Component{
       <BottomLink to="/impressum" text="Impressum" />
       <BottomLink to="/datenschutz" text="Datenschutz" />
       <BottomLink to="/anfahrt" text="Anfahrt" />
+      <BottomLink to="/neumitglied" text="Werde Mitglied!"/>
       {!this.state.onTop && 
         <button className={styles.redbtnbtn} onClick={() => this.topFunction()} title="Gehe Hoch">Hoch</button>}
       </div>

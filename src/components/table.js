@@ -2,31 +2,66 @@ import React from "react"
 
 import styles from "./table.module.css"
 
-export default props => (
-<table className={styles.table}>
-<thead>
-    <tr>
-        {props.header.map(({title, width}, index) => (
-            <th key={title} style={{"minWidth": width}}>{title}</th>
-        ))}
-    </tr>
-</thead>
-<tbody>
-    {props.data.map((node, index) => {
-        if(node){
-        return (
-            <tr key = {node.id}>
-                {node.data.map((node, index) => (
-                    <td key={index}>{node}</td>
-                ))}
-            </tr>
-        )}
-        else{
-            return null
-        }
+class Table extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            width: 1000
+        };
+
     }
-    )
+    componentDidMount(){
+        window.addEventListener("resize", () => this.updateDimensions());
+        this.updateDimensions()
     }
-</tbody>
-</table>
-)
+
+    componentWillUnmount(){
+        window.removeEventListener("resize", () => this.updateDimensions());
+    }
+    updateDimensions(){
+        let w = window,
+        d = document,
+        documentElement = d.documentElement,
+        body = d.getElementsByTagName('body')[0],
+        width = w.innerWidth || documentElement.clientWidth || body.clientWidth
+        
+        this.setState({width: width});
+    }
+    render(){
+        const columnsToKeep = (this.props.columnsFilter) ?
+         this.props.columnsFilter(this.state.width): 
+         Array.from({length: this.props.header.length}, (x, i) => i);
+         return (
+            <table className={styles.table}>
+            <thead>
+                <tr>
+                    {this.props.header.filter((node, index) => columnsToKeep.includes(index))
+                    .map(({title, width}, index) => (
+                        <th key={title} style={{"minWidth": width}}>{title}</th>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                {this.props.data.map((node, index) => {
+                    if(node){
+                    return (
+                        <tr key = {node.id}>
+                            {node.data.filter((node, index) => columnsToKeep.includes(index))
+                            .map((node, index) => (
+                                <td key={index}>{node}</td>
+                            ))}
+                        </tr>
+                    )}
+                    else{
+                        return null
+                    }
+                }
+                )
+                }
+            </tbody>
+            </table>
+        )
+    }
+}
+
+export default Table

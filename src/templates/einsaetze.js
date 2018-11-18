@@ -55,7 +55,11 @@ const EinsatzTable = ({einsaetze}) => (
                 </EinsatzLink>
             ]    
 
-        }))}/>
+        }))}
+        columnsFilter={width => (width > 600)? [0, 1, 2, 3]: 
+            (width > 410)? [0, 1, 2]:
+            [0, 1]}
+        />
     </div>
 )
 
