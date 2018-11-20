@@ -6,6 +6,10 @@ import hamburgerMenu from "../images/hamburger_menu.svg"
 import Img from "gatsby-image"
 import { rhythm } from "../utils/typography"
 import styles from "./button.module.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+
+const downIcon = <FontAwesomeIcon icon={faCaretDown} />
 
 const logoHeight = 7;
 const fontSize = 1.2;
@@ -13,16 +17,21 @@ const imagePaddingTop = 0;
 const horizontalPadding = 0.5;
 const hoverFactor = 1.05;
 const feuerwehrRot = "#A81C1C";
-const hintergrundFarbe = '#F3F7F4'
+const hintergrundFarbe = '#F3F7F4';
+const hintergrundSelected = '#ddd';
 
 const maxPageWidth = 800;
 
-const navbarLinkCss = css`
+const _navbarLinkCss = css`
 display: block;
 color: gray;
 text-decoration: none;
+border: none;
+background: none;
+cursor: pointer;
+outline: none;
 padding: ${(logoHeight * hoverFactor + imagePaddingTop - fontSize)/2}rem ${horizontalPadding}rem;
-
+width:100%;
 @media (max-width: ${maxPageWidth}px){
     display: flex;
     padding: 1rem ${horizontalPadding}rem;
@@ -30,6 +39,37 @@ padding: ${(logoHeight * hoverFactor + imagePaddingTop - fontSize)/2}rem ${horiz
     float: center;
 }
 `
+const activeCss = css`
+background-color: ${hintergrundSelected};
+color: black;
+`
+
+const navbarLinkCss = css(
+    {
+    ':hover': {
+        color: feuerwehrRot,
+        'background-color': '#fff'
+    },
+    'transition': ['ease-in-out color 0.15s', 'ease-in-out background-color 1s'],
+
+    },
+    _navbarLinkCss
+)
+const activeNavbarLinkCss = css(
+    {
+    ':hover': {
+        color: feuerwehrRot,
+    },
+    'transition': ['ease-in-out color 0.15s', 'ease-in-out background-color 1s'],
+
+    },
+    _navbarLinkCss,
+    activeCss
+)
+const navbarSubCss = css(
+    activeNavbarLinkCss,
+    css(`padding: 1rem 0;`)
+)
 
 const BottomLink = props => (
     <div className={css`
@@ -60,24 +100,46 @@ margin-bottom: 0;
     float: none;
 }
 `
+const NavbarSubItem = props => (
+    <Link className={navbarSubCss} to={props.to}>{props.name}</Link>
+)
 
 const NavbarItem = props => {
     const displayThisMenu = props.visible && dontDisplayOnSmall
+    if(props.children){
+        const showDropdown = props.shownDropdown === props.name;
+        const displayStyle = showDropdown? 'block': 'none'; 
+        const linkCss = showDropdown? activeNavbarLinkCss: navbarLinkCss;
+        return(
+            <div className={`${navbarLiCss} ${displayThisMenu}`}
+                onMouseOver={() => props.handleDropdown(props.name)}
+                onMouseOut={() => props.handleDropdown(null)}>
+                <div>
+            <button className={linkCss} onClick={() => props.handleDropdown(props.name)}>
+                <>{props.name} </>
+                {downIcon}
+            </button>
+            </div>
+            <div className={css`
+                @media (min-width: ${maxPageWidth}px){
+                    position: absolute;
+                    min-width: 130px;
+                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                    z-index: 1;
+                }
+                background-color: ${hintergrundSelected};
+                padding-left: 8px;
+            `} style={{display: displayStyle}}>
+              {props.children}  
+            </div>
+            </div>
+        )
+    }else
     return(
-    <li className={`${navbarLiCss} ${displayThisMenu}`}
+    <div className={`${navbarLiCss} ${displayThisMenu}`}
     >
-    <Link className={css(
-        {
-        ':hover': {
-            color: feuerwehrRot,
-            'background-color': '#fff'
-        },
-        'transition': ['ease-in-out color 0.15s', 'ease-in-out background-color 1s'],
-
-        },
-        navbarLinkCss
-    )} to={props.link}>{props.name}</Link>
-    </li>
+    <Link className={navbarLinkCss} to={props.link}>{props.name}</Link>
+    </div>
 );}
 
 
@@ -87,10 +149,12 @@ class Layout extends React.Component{
         super(props);
         this.state = {
             showMenu: true,
-            onTop: true
+            onTop: true,
+            shownDropdown: null
         };
 
         this.handleMenuClick = this.handleMenuClick.bind(this);
+        this.handleDropdown = this.handleDropdown.bind(this);
     }
     handleMenuClick(){
         this.setState(state => ({
@@ -112,6 +176,13 @@ class Layout extends React.Component{
     componentDidMount(){
         window.onscroll = () => this.scrollFunction()
 
+    }
+    handleDropdown(name){
+        
+        this.setState((state, props) => { 
+            const newShown = state.shownDropdown === name? null : name;
+            return {shownDropdown: newShown};
+        });
     }
     render(){
       return (
@@ -184,7 +255,7 @@ class Layout extends React.Component{
     `} onClick={this.handleMenuClick}>
     <img src={hamburgerMenu} alt=""/>
     </div>
-    <ul className={css`
+    <div className={css`
         list-style-type: none;
         font-size: ${fontSize}rem;
         margin: 0 auto;
@@ -195,7 +266,7 @@ class Layout extends React.Component{
         
     `}
     >
-        <li className={css`
+        <div className={css`
             float: left;
             margin-bottom: 0;
 
@@ -222,15 +293,17 @@ class Layout extends React.Component{
             to="/">
                 <img src={logo} alt="logo feuerwehr" className={css`height: ${logoHeight}rem; margin: 0;transition: 0.3s;`}></img>
             </Link>
-        </li>
-            {/*<NavbarItem name="Aktuelles" link="/" />*/}
+        </div>
             <NavbarItem name="Einsätze" link="/einsaetze/" visible={this.state.showMenu}/>
             <NavbarItem name="Berichte" link="/berichte/" visible={this.state.showMenu}/>
-            <NavbarItem name="Feuerwehr" link="/feuerwehr/" visible={this.state.showMenu} />
+            <NavbarItem name="Feuerwehr" visible={this.state.showMenu} shownDropdown={this.state.shownDropdown} handleDropdown={this.handleDropdown}>
+                <NavbarSubItem to="/mannschaft" name="Mannschaft"/>
+                <NavbarSubItem to="/ausruestung" name="Ausrüstung" />
+            </NavbarItem>
             <NavbarItem name="Jugendfeuerwehr" link="/jugendfeuerwehr/" visible={this.state.showMenu}/>
             <NavbarItem name="Verein" link="/verein/" visible={this.state.showMenu}/>
             <NavbarItem name="Kalender" link="/kalender/" visible={this.state.showMenu}/>
-    </ul>
+    </div>
     </div>
     <div className={css`
     background-color: ${hintergrundFarbe};
