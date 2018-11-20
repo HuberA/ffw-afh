@@ -23,6 +23,7 @@ const TerminLink = props => (
 export default ({ data }) =>(
     <Layout>
         <h1>Kalender</h1>
+        <Popup calendars={["Gruppe A", "Gruppe B", "Gruppe C", "Gruppe D", "Jugend"]}/>
         <Table 
         header={[{title:'Datum', width:'100px',},
                 {title: 'Gruppe' },
@@ -74,7 +75,6 @@ export default ({ data }) =>(
                                 [0, 5]
                             }
         />
-        <Popup/>
     </Layout>
 )
 

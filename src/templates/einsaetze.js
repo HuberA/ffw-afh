@@ -5,8 +5,8 @@ import Table from "../components/table"
 import { css } from "react-emotion"
 import { color as textColor } from "../utils/typography"
 import Img from "gatsby-image"
-import styles from "./dropdown.module.css"
 import Seo from "../components/seo"
+import { Dropdown } from "../components/Dropdown";
 
 const EinsatzLink = props => (
     <Link to={`/einsaetze/${props.id}`} className={css`
@@ -60,17 +60,6 @@ const EinsatzTable = ({einsaetze}) => (
             (width > 410)? [0, 1, 2]:
             [0, 1]}
         />
-    </div>
-)
-
-const Dropdown = props => (
-    <div className={styles.dropdown}>
-        <button className={styles.dropbtn}>{props.selected}  &darr;</button>
-        <div className={styles.dropdownContent}>
-            {props.options.map((year, index) => (
-            <Link key={year} className={styles.dropdownLink} to={`/einsaetze/${year}/`}>{year}</Link>
-            ))}
-        </div>
     </div>
 )
 

@@ -1,6 +1,7 @@
 import React from "react"
 import { css } from "react-emotion"
 import styles from "./button.module.css"
+import { Dropdown } from "./Dropdown";
 
 class Popup extends React.Component{
     constructor(props){
@@ -9,22 +10,21 @@ class Popup extends React.Component{
 
         
     }
-    handleClose(){
+    handleClose(groupName){
         //const div = e.target.parentElement.parentElement;
         //  div.style.opacity="0"; 
         //setTimeout(() => { div.style.display = "none";});}}
-        
+        //calendarMap = new Map([["Gruppe A"]])
         this.setState(state => ({
             showPopup: !state.showPopup
+
         }));
     }
     render(){
     
     return(
         <div>
-            <div className={styles.redbtn} onClick={(e) => {this.handleClose()}}>
-            Kalender Abonnieren
-            </div>
+            <Dropdown selected="Kalender Abonnieren" options={this.props.calendars} onClick={(e) => this.handleClose(e)} minWidth={180}/>
         {this.state.showPopup &&
         <div className={css`
             position: fixed;
