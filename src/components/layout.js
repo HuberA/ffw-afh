@@ -181,7 +181,7 @@ class Layout extends React.Component{
         
         this.setState((state, props) => { 
             const newShown = state.shownDropdown === name? null : name;
-            return {shownDropdown: newShown};
+            return {shownDropdown: name};
         });
     }
     render(){
