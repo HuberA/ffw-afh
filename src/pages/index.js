@@ -44,18 +44,20 @@ export default ( {data}) => {
     <div className={css`
     text-align: center
     `}>
-    <img src={img_fwhaus} width="100%" alt="Feuerwehr-Gerätehaus"></img>
+    <div style={{position: 'relative'}}>
+        <div>
+          <img src={img_lf16} alt="LF16/12 der Feuerwehr Altfraunhofen" className={headingImageFormat('left')}/>
+        </div>
+    </div>
+    <img src={img_mfz} alt="MZF der Freiwilligen Feuerwehr Altfraunhofen" className={headingImageFormat('right')}/>
+
+    
     <h2>Herzlich willkommen auf der Website der</h2>
     <h1>Freiwilligen Feuerwehr Altfraunhofen</h1>
     <div className={css`
         overflow: auto;
     `}>
-    <div style={{position: 'relative'}}>
-        <div>
-    <img src={img_lf16} alt="LF16/12 der Feuerwehr Altfraunhofen" className={headingImageFormat('left')}/>
-        </div>
-    </div>
-    <img src={img_mfz} alt="MZF der Freiwilligen Feuerwehr Altfraunhofen" className={headingImageFormat('right')}/>
+    <img src={img_fwhaus} width="100%" alt="Feuerwehr-Gerätehaus"></img>
     </div>
     </div>
     <Divider/>
@@ -168,6 +170,8 @@ query {
             }
           }
         }
+
+      
       
       
       

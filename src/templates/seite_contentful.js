@@ -40,7 +40,7 @@ query($seite: String!){
                 ...GatsbyContentfulFluid_tracedSVG
             }
             fluid(maxWidth: 1000, maxHeight: 700, background:"white") {
-                src
+                ...GatsbyContentfulFluid_tracedSVG
             }
         }
         childContentfulSeiteneintragEintragTextNode {

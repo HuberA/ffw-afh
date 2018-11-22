@@ -6,7 +6,7 @@
     border: none;
     cursor: pointer;
     min-width: 120px;
-    border-radius: 5px;
+    border-radius: 3px;
     
 }
 
@@ -24,15 +24,20 @@
     z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-content a , .dropdown-content button{
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
-.dropdown-content a:active {
+.dropdown-content a:hover, .dropdown-content button:hover {background-color: #f1f1f1}
+.dropdown-content a:active, .dropdown-content button:active {
     background-color: #9c1c1c;
     color: white;
 
