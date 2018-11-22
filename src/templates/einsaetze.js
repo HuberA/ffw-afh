@@ -6,7 +6,7 @@ import { css } from "react-emotion"
 import { color as textColor } from "../utils/typography"
 import Img from "gatsby-image"
 import Seo from "../components/seo"
-import { Dropdown } from "../components/Dropdown";
+import Dropdown from "../components/dropdown";
 
 const EinsatzLink = props => (
     <Link to={`/einsaetze/${props.id}`} className={css`

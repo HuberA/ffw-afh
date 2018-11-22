@@ -2,7 +2,7 @@ import React from "react"
 import Layout from "../components/layout"
 import { graphql, Link } from "gatsby"
 import Table from "../components/table"
-import Popup from "../components/popup"
+import {Popup, PopupItem} from "../components/popup"
 import { css } from "react-emotion"
 import { color as textColor } from "../utils/typography"
 
@@ -23,7 +23,15 @@ const TerminLink = props => (
 export default ({ data }) =>(
     <Layout>
         <h1>Kalender</h1>
-        <Popup calendars={["Gruppe A", "Gruppe B", "Gruppe C", "Gruppe D", "Jugend"]}/>
+        <Popup>
+            <PopupItem name="Alle" value="ffw.ics" /> 
+            <PopupItem name="Gruppe A" value="ffwa.ics"/>
+            <PopupItem name="Gruppe B" value="ffwb.ics"/>
+            <PopupItem name="Gruppe C" value="ffwc.ics"/>
+            <PopupItem name="Gruppe D" value="ffwd.ics"/>
+            <PopupItem name="Jugend" value="ffwj.ics"/>
+            <PopupItem name="Feuerwehrhaus" value="fwhaus.ics"/> 
+        </Popup>
         <Table 
         header={[{title:'Datum', width:'100px',},
                 {title: 'Gruppe' },

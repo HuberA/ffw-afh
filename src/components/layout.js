@@ -116,7 +116,7 @@ const NavbarItem = props => {
                 onMouseOut={() => props.handleDropdown(null)}>
                 <div>
             <button className={linkCss} onClick={() => props.handleDropdown(props.name)}>
-                <>{props.name} </>
+               <>{props.name} </>
                 {downIcon}
             </button>
             </div>
