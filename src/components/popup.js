@@ -1,7 +1,9 @@
 import React from "react"
 import { css } from "react-emotion"
 import styles from "./button.module.css"
-import { Dropdown } from "./Dropdown";
+import Dropdown from "./dropdown";
+
+const PopupItem = (props) => props
 
 class Popup extends React.Component{
     constructor(props){
@@ -15,16 +17,16 @@ class Popup extends React.Component{
         //  div.style.opacity="0"; 
         //setTimeout(() => { div.style.display = "none";});}}
         //calendarMap = new Map([["Gruppe A"]])
-        this.setState(state => ({
-            showPopup: !state.showPopup
-
-        }));
+        this.setState({
+            showPopup: groupName
+        });
     }
     render(){
-    
+        const calMap = new Map(this.props.children.map(child => [child.props.name, child.props.value]))
+        const url = calMap.get(this.state.showPopup)
     return(
         <div>
-            <Dropdown selected="Kalender Abonnieren" options={this.props.calendars} onClick={(e) => this.handleClose(e)} minWidth={180}/>
+            <Dropdown selected="Kalender Abonnieren" options={this.props.children.map(child => child.props.name)} onClick={(e) => this.handleClose(e)} minWidth={180}/>
         {this.state.showPopup &&
         <div className={css`
             position: fixed;
@@ -47,7 +49,7 @@ class Popup extends React.Component{
             margin-bottom: 15px;
             position:fixed;
             width: 310px;
-            height: 250px;
+            height: 270px;
             padding: 20px;
             top:50%; left: 50%;
             margin-left: -170px;
@@ -65,9 +67,11 @@ class Popup extends React.Component{
                  transition: 0.3s;
             `} onClick={ (e) => { this.handleClose()} }>&times;</span>  
             <h4 className={css`margin-bottom:10px;`}>Kalender herunterladen und abonnieren</h4>
-            <a className={styles.redbtn} href="/ffw.ics">Kalender als ics herunterladen</a>
+            <a className={styles.redbtn} href={`/${url}`}>Kalender als ics herunterladen</a>
             <p className={css`margin-bottom:10px;`} >Kopieren Sie die URL und abonnieren Sie sie in ihrem Kalenderprogramm</p>
-            <input onFocus={(e) => (e.target.select())} readOnly={true} value={`${window.location.protocol}//${window.location.host}/ffw.ics`} />
+            <input
+                style={{width: "100%"}} 
+                onFocus={(e) => (e.target.select())} readOnly={true} value={`${window.location.protocol}//${window.location.host}/${url}`} />
         </div>
         </div>}
         </div>
@@ -75,4 +79,4 @@ class Popup extends React.Component{
     }
 }
 
-export default Popup;
+export {Popup, PopupItem};
