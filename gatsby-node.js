@@ -334,7 +334,7 @@ exports.createPages = ({ graphql, actions}) => {
             calFWhausPath = path.posix.join(process.cwd(), DEPLOY_DIR, 'fwhaus.ics')
             fs.writeFile(calFWhausPath, calFwhaus.toString(), function(err) {
                 if (err){
-                    return console.log(err);
+                    return console.err(err);
                 }
             })
             

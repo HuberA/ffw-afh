@@ -5,6 +5,7 @@ import Table from "../components/table"
 import {Popup, PopupItem} from "../components/popup"
 import { css } from "react-emotion"
 import { color as textColor } from "../utils/typography"
+import Seo from "../components/seo"
 
 
 const dayFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -19,9 +20,13 @@ const TerminLink = props => (
         {props.children}
     </Link>
 );
-
+const description = "Webkalender der Freiwilligen Feuerwehr Altfrauhofen"
 export default ({ data }) =>(
     <Layout>
+        <Seo title={`Feuerwehrkalender`} 
+                 description_short={description}
+                 description_long={description}
+                 url="http://feuerwehr-altfrauhofen.de"/>
         <h1>Kalender</h1>
         <Popup>
             <PopupItem name="Alle" value="ffw.ics" /> 

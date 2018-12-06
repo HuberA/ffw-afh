@@ -17,7 +17,6 @@ class Slideshow extends React.Component{
         this.setState({slideIndex: n});
     }
     render(){
-        console.log('images:', this.props.images)
         if (this.props.images.length === 1)
             return <Img fluid={this.props.images[0].fluid} backgroundColor="#A81C1C"/>
         else if(this.props.images.length > 0) 
