@@ -9,7 +9,8 @@ import styles from "./portrait.module.css"
 const Portrait = props => (
     <div key={props.id} className={styles.container} >
         <div className={styles.image} >
-            <Img fluid={props.data.bild.fluid} alt={props.data.name} backgroundColor="#A81C1C"/>
+            <Img fluid={(props.data.bild)?props.data.bild.fluid: props.ersatzbild.fluid}
+             alt={props.data.name} backgroundColor="#A81C1C"/>
         </div>
         <div className={styles.text} >
             <h4 style={{marginBottom:'0'}}>{props.data.name}</h4>
@@ -50,7 +51,7 @@ export default ( all_data ) =>{
                 );
                 case "ContentfulPortrait":
                 return(
-                    <Portrait data={eintrag}/>
+                    <Portrait data={eintrag} ersatzbild={data.ersatzbild.childImageSharp}/>
                 );
                 default:
                 return null;
@@ -107,5 +108,12 @@ query ($seite: String!) {
         }
       }
     }
+    ersatzbild: file(relativePath: {eq: "noch_kein_bild_verfgbar.jpg"}) {
+        childImageSharp {
+          fluid(maxWidth: 300) {
+            ...GatsbyImageSharpFluid_tracedSVG
+          }
+        }
+      }
   }
 `

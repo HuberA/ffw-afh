@@ -180,7 +180,6 @@ class Layout extends React.Component{
     handleDropdown(name){
         
         this.setState((state, props) => { 
-            const newShown = state.shownDropdown === name? null : name;
             return {shownDropdown: name};
         });
     }

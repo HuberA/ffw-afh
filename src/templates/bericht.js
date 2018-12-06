@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-import Img from "gatsby-image"
 import { css } from "react-emotion"
 import Navigation from "../components/navigation"
 import Seo from "../components/seo"

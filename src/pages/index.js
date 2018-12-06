@@ -1,7 +1,5 @@
 import React from "react"
 import Layout from "../components/layout"
-import img_lf16 from "../images/lf16.jpg"
-import img_mfz from "../images/mzf.jpg"
 import img_fwhaus from "../images/fwhaus.jpg"
 import { css } from "react-emotion"
 import { graphql, Link } from "gatsby"
@@ -46,10 +44,10 @@ export default ( {data}) => {
     `}>
     <div style={{position: 'relative'}}>
         <div>
-          <img src={img_lf16} alt="LF16/12 der Feuerwehr Altfraunhofen" className={headingImageFormat('left')}/>
+          <Img fluid={data.lf16.childImageSharp.fluid} alt="LF16/12 der Feuerwehr Altfraunhofen" className={headingImageFormat('left')}/>
         </div>
     </div>
-    <img src={img_mfz} alt="MZF der Freiwilligen Feuerwehr Altfraunhofen" className={headingImageFormat('right')}/>
+    <Img fluid={data.mzf.childImageSharp.fluid} alt="MZF der Freiwilligen Feuerwehr Altfraunhofen" className={headingImageFormat('right')}/>
 
     
     <h2>Herzlich willkommen auf der Website der</h2>
@@ -57,7 +55,7 @@ export default ( {data}) => {
     <div className={css`
         overflow: auto;
     `}>
-    <img src={img_fwhaus} width="100%" alt="Feuerwehr-Gerätehaus"></img>
+    <Img fluid={data.fwhaus.childImageSharp.fluid} alt="Feuerwehr-Gerätehaus"></Img>
     </div>
     </div>
     <Divider/>
@@ -165,12 +163,48 @@ query {
       
       einsatz_img:file(relativePath: {eq: "einsatz.jpg"}) {
           childImageSharp {
-            fixed(width: 150, height: 150) {
+            fixed(width: 150, height: 150, traceSVG: {
+              color: "#A81C1C"
+              turnPolicy: TURNPOLICY_MINORITY
+              blackOnWhite: true
+            }) {
                 ...GatsbyImageSharpFixed_tracedSVG
             }
           }
         }
-
+        fwhaus:file(relativePath: {eq: "fwhaus.jpg"}) {
+          childImageSharp {
+            fluid(maxWidth: 1000, traceSVG: {
+              color: "#A81C1C"
+              turnPolicy: TURNPOLICY_MINORITY
+              blackOnWhite: true
+            }) {
+                ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
+        lf16:file(relativePath: {eq: "lf16.jpg"}) {
+          childImageSharp {
+            fluid(maxWidth: 500, traceSVG: {
+              color: "#A81C1C"
+              turnPolicy: TURNPOLICY_MINORITY
+              blackOnWhite: true
+            }) {
+                ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
+        mzf:file(relativePath: {eq: "mzf.jpg"}) {
+          childImageSharp {
+            fluid(maxWidth: 500, traceSVG: {
+              color: "#A81C1C"
+              turnPolicy: TURNPOLICY_MINORITY
+              blackOnWhite: true
+            }) {
+                ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
       
       
       
