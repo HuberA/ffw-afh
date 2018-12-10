@@ -1,6 +1,8 @@
 import React from "react"
 import Img from "gatsby-image"
 import styles from "./thumbnail_slideshow.module.css"
+import Hammer from "react-hammerjs"
+
 
 class Slideshow extends React.Component{
     constructor(props){
@@ -16,8 +18,11 @@ class Slideshow extends React.Component{
     currentSlide(n) {
         this.setState({slideIndex: n});
     }
+    handleSwipe(a){
+            this.plusSlides(-Math.sign(a.deltaX))
+    
+    }
     render(){
-        console.log('images:', this.props.images)
         if (this.props.images.length === 1)
             return <Img fluid={this.props.images[0].fluid} backgroundColor="#A81C1C"/>
         else if(this.props.images.length > 0) 
@@ -27,7 +32,9 @@ class Slideshow extends React.Component{
                 return (
                 <div className={styles.mySlides} style={{display:(index===this.state.slideIndex)?'block':'none'}} key={index}>
                 <div className={styles.numbertext}>{index+1} / {this.props.images.length}</div>
+                <Hammer onSwipe={(a) => this.handleSwipe(a)}>
                 <img src={image.fluid.src} alt={image.title} style={{display: "block", marginLeft: "auto", marginRight: "auto"}}/>
+                </Hammer>
               </div>
             )})}
               
