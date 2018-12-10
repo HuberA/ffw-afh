@@ -149,7 +149,7 @@ class Layout extends React.Component{
         super(props);
         this.state = {
             showMenu: true,
-            onTop: true,
+            onTop: 0,
             shownDropdown: null
         };
 
@@ -162,16 +162,28 @@ class Layout extends React.Component{
         }));
     }
     scrollFunction(){
-        const top = document.body.scrollTop > 20 || document.documentElement.scrollTop > 20
-        if(this.state.onTop === top){
-            this.setState(state => ({
-                onTop: !top
+        const top = document.body.scrollTop || document.documentElement.scrollTop;
+        this.setState(state => ({
+                onTop: top
             }))
+        
+    }
+    tick(){
+        if (this.state.onTop < 20){
+            clearInterval(this.intervalHandle);
+            this.scroll(0)
+        }else{
+            this.scroll(0.8*this.state.onTop)
         }
     }
-    topFunction(){
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
+    topFunction() {
+
+        this.intervalHandle = setInterval(() => this.tick(), 30); 
+        }
+    
+    scroll(val){
+        document.body.scrollTop = val;
+        document.documentElement.scrollTop = val;
     }
     componentDidMount(){
         window.onscroll = () => this.scrollFunction()
@@ -346,14 +358,15 @@ class Layout extends React.Component{
       <BottomLink to="/datenschutz" text="Datenschutz" />
       <BottomLink to="/anfahrt" text="Anfahrt" />
       <BottomLink to="/neumitglied" text="Werde Mitglied!"/>
-      {!this.state.onTop && 
+      {this.state.onTop > 20 && 
         <button className={styles.redbtnbtn} onClick={() => this.topFunction()} title="Gehe Hoch">Hoch</button>}
       </div>
 </footer> 
     
  
     </div>
-  )}
+  )
+}
   />
 );
     }

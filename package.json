@@ -36,6 +36,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-emotion": "^9.2.12",
+    "react-hammerjs": "^1.0.1",
     "react-helmet": "^5.2.0",
     "react-typography": "^0.16.13",
     "scriptjs": "^2.5.9",

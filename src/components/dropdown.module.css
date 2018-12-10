@@ -24,7 +24,7 @@
     z-index: 1;
 }
 
-.dropdown-content a , .dropdown-content button{
+.dropdown-content a, .dropdown-content button {
     border: none;
     background: none;
     cursor: pointer;
