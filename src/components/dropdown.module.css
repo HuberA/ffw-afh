@@ -6,11 +6,7 @@
     border: none;
     cursor: pointer;
     min-width: 120px;
-<<<<<<< HEAD
-    border-radius: 5px;
-=======
     border-radius: 3px;
->>>>>>> 2f1040558296cc99127ac0c7f3ea597949770bc3
     
 }
 
@@ -28,11 +24,7 @@
     z-index: 1;
 }
 
-<<<<<<< HEAD
 .dropdown-content a, .dropdown-content button {
-=======
-.dropdown-content a , .dropdown-content button{
->>>>>>> 2f1040558296cc99127ac0c7f3ea597949770bc3
     border: none;
     background: none;
     cursor: pointer;
