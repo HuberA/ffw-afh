@@ -362,6 +362,10 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
               test: /scriptjs/,
               use: loaders.null(),
             },
+            {
+              test: /plotly/,
+              use: loaders.null(),
+            }
           ],
         },
       })
