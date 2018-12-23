@@ -7,7 +7,7 @@ import favicon from "../images/logo-ffw.svg"
 export default props => {
     const title =props.title
     const title_long =props.title
-    const image = `http://feuerwehr-altfraunhofen.de/neu${props.image}`
+    const image = props.image && (props.image.startsWith("//"))?props.image:`http://feuerwehr-altfraunhofen.de/neu${props.image}`
     return(
         <Helmet
             htmlAttributes={{
