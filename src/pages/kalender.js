@@ -26,7 +26,7 @@ export default ({ data }) =>(
         <Seo title={`Feuerwehrkalender`} 
                  description_short={description}
                  description_long={description}
-                 url="http://feuerwehr-altfrauhofen.de"/>
+                 url="http://feuerwehr-altfraunhofen.de/neu"/>
         <h1>Kalender</h1>
         <Popup>
             <PopupItem name="Alle" value="ffw.ics" /> 

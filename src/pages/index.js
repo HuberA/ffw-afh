@@ -38,7 +38,7 @@ export default ( {data}) => {
                  description_short={description}
                  description_long={description}
                  image={img_fwhaus}
-                 url="http://feuerwehr-altfrauhofen.de"/>
+                 url="http://feuerwehr-altfraunhofen.de/neu"/>
     
     <div className={css`
         overflow: auto;

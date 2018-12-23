@@ -10,7 +10,7 @@ export default () =>(
         <Seo title={`Anfahrt - Feuerwehr Altfraunhofen`} 
                  description_short={description}
                  description_long={description} 
-                 url="http://feuerwehr-altfrauhofen.de"/>
+                 url="http://feuerwehr-altfraunhofen.de/neu"/>
         <h1>Anfahrt</h1>
         <p>Freiwillige Feuerwehr Altfrauhofen e.V.<br/>
             Geisenhausener Straße 23<br/>

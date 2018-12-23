@@ -62,7 +62,7 @@ export default ({data}) => {
                  description_short={description_short}
                  description_long={description_long}
                  image={image} 
-                 url="http://feuerwehr-altfrauhofen.de"/>
+                 url="http://feuerwehr-altfraunhofen.de/neu"/>
              <h1>{einsatz.einsatzart}</h1>
             <Navigation previous={data.previous} next={data.next} parent="" path="einsaetze" name="Einsatz"/>
             {einsatz.einsatzbild &&

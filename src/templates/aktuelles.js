@@ -11,7 +11,7 @@ export default ({ data }) => {
         <Seo title={`${post.frontmatter.title} - Feuerwehr Altfraunhofen`} 
                  description_short={post.excerpt}
                  description_long={post.excerpt} 
-                 url="http://feuerwehr-altfrauhofen.de"/>
+                 url="http://feuerwehr-altfraunhofen.de/neu"/>
         <div>
             <h1>{post.frontmatter.title}</h1>
             {post.frontmatter.image && <img src={post.frontmatter.image}

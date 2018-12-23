@@ -33,7 +33,7 @@ export default ({ data}) => {
       <Seo title={termin.beschreibung} 
            description_short={termin.beschreibung}
                  description_long={termin.beschreibung}
-                 url={`http://feuerwehr-altfrauhofen.de/termine/${termin.id}`}/>
+                 url={`http://feuerwehr-altfraunhofen.de/termine/${termin.id}`}/>
         <div>
         <h1>{termin.beschreibung}</h1>
         <Table 
