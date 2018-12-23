@@ -2,10 +2,9 @@ require("dotenv").config({
     path: `.env.${process.env.NODE_ENV}`,
   })
 module.exports = {
-    pathPrefix: `/neu`,
     siteMetadata: {
         title: `Freiwillige Feuerwehr Altfraunhofen`,
-        siteUrl: 'http://feuerwehr-altfraunhofen.de'
+        siteUrl: 'https://wonderful-morse-21b81f.netlify.com'
     },
     plugins: [
         {
