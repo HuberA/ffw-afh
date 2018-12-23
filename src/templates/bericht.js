@@ -25,7 +25,7 @@ export default ({ data, pageContext }) => {
            description_short={post.unteruberschrift}
                  description_long={post.unteruberschrift}
                  image={image} 
-                 url={`http://feuerwehr-altfraunhofen.de/neu/berichte/${id}`}/>
+                 url={`http://feuerwehr-altfraunhofen.de/neu/berichte/${post.slug}`}/>
         <div>
         <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
             <p className={css`color:gray;`}>
@@ -45,6 +45,7 @@ export const query = graphql`
 query($id: String!){
     contentfulArtikel(id: {eq: $id}) {
       id
+      slug
       datum
       titel
       unteruberschrift
