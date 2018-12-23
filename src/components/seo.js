@@ -5,8 +5,9 @@ import favicon from "../images/logo-ffw.svg"
 
 
 export default props => {
-    const title =(props.title) && (props.title.length > 35)? props.title.substring(0, 35): props.title
-    const title_long =(props.title) && (props.title.length > 65)? props.title.substring(0,65): props.title
+    const title =props.title
+    const title_long =props.title
+    const image = `http://feuerwehr-altfraunhofen.de/neu${props.image}`
     return(
         <Helmet
             htmlAttributes={{
@@ -25,13 +26,13 @@ export default props => {
             {props.description_short &&
             <meta property="og:description" content={props.description_short} />}
             {props.image &&
-             <meta property="og:image" content={props.image} />}
+             <meta property="og:image" content={image} />}
             <meta property="og:type" content="article" />
             <meta property="og:locale" content="de_DE" />
 
             <meta name="twitter:card" content="summary" />
             {props.image &&
-            <meta name="twitter:image" content={props.image} />}
+            <meta name="twitter:image" content={image} />}
             <meta name="twitter:description" content={props.description_long} />
         </Helmet>
 )}
