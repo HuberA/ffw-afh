@@ -39,25 +39,13 @@ export default ( {data}) => {
                  description_long={description}
                  image={img_fwhaus}
                  url="http://feuerwehr-altfrauhofen.de"/>
-    <div className={css`
-    text-align: center
-    `}>
-    <div style={{position: 'relative'}}>
-        <div>
-          <Img fluid={data.lf16.childImageSharp.fluid} alt="LF16/12 der Feuerwehr Altfraunhofen" className={headingImageFormat('left')}/>
-        </div>
-    </div>
-    <Img fluid={data.mzf.childImageSharp.fluid} alt="MZF der Freiwilligen Feuerwehr Altfraunhofen" className={headingImageFormat('right')}/>
-
     
-    <h2>Herzlich willkommen auf der Website der</h2>
-    <h1>Freiwilligen Feuerwehr Altfraunhofen</h1>
     <div className={css`
         overflow: auto;
     `}>
     <Img fluid={data.fwhaus.childImageSharp.fluid} alt="Feuerwehr-Gerätehaus"></Img>
     </div>
-    </div>
+    
     <Divider/>
     <div className={css`
         overflow: auto;

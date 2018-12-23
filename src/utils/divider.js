@@ -6,7 +6,7 @@ export default () => (
         display: block;
         height: 0.5px;
         border: 0;
-        border-top: 1px solid #C0425555;
+        border-top: 1px solid #ccc;
         margin: 1em 0;
         padding: 0
     `}/>

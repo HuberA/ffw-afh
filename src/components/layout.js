@@ -6,10 +6,8 @@ import hamburgerMenu from "../images/hamburger_menu.svg"
 import Img from "gatsby-image"
 import { rhythm } from "../utils/typography"
 import styles from "./button.module.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { FaCaretDown } from 'react-icons/fa';
 
-const downIcon = <FontAwesomeIcon icon={faCaretDown} />
 
 const logoHeight = 7;
 const fontSize = 1.2;
@@ -21,6 +19,8 @@ const hintergrundFarbe = '#F3F7F4';
 const hintergrundSelected = '#ddd';
 
 const maxPageWidth = 800;
+
+const bodyWidth = 1000;
 
 const _navbarLinkCss = css`
 display: block;
@@ -117,7 +117,7 @@ const NavbarItem = props => {
                 <div>
             <button className={linkCss} onClick={() => props.handleDropdown(props.name)}>
                <>{props.name} </>
-                {downIcon}
+                {<FaCaretDown/>}
             </button>
             </div>
             <div className={css`
@@ -225,19 +225,28 @@ class Layout extends React.Component{
   render = {data => (
     <div>
     <div className={css`min-height: calc(100vh - 210px); background-color: ${hintergrundFarbe};`}>
+    {/* TOP PANEL */}
     <div className={css`
-        background-color: #ffffffe0;
+        background-color: #ffffff;
         margin: 0;
         padding-top: 30px;
         padding-bottom: 10px;
-        text-align center;
+        text-align: center;
     `+ ' ' + dontDisplayOnSmall}>
-        <Link to="/" className={css`
-        color: ${feuerwehrRot};
-        text-decoration: none;
-        font-size: 2.5rem
-        `}>{data.site.siteMetadata.title}</Link>
+        <div className={css`
+            max-width:${maxPageWidth}px;
+            margin: auto;
+            text-align: left;`}>
+                <Link to="/" className={css`
+                color: ${feuerwehrRot};
+                text-decoration: none;
+                font-size: 2.5rem;
+                margin-left: 1.5rem;
+                `}>
+                {data.site.siteMetadata.title}</Link>
+        </div>
     </div>
+    {/* NAVIGATION */}
     <div className={css`
     position: -webkit-sticky;
     position: sticky;
@@ -272,9 +281,7 @@ class Layout extends React.Component{
         margin: 0 auto;
         max-width: ${maxPageWidth}px;
         padding: 0;
-        overflow: hidden;
-
-        
+        overflow: hidden;   
     `}
     >
         <div className={css`
@@ -320,9 +327,11 @@ class Layout extends React.Component{
     background-color: ${hintergrundFarbe};
     `}
     >
+    {/* MAIN PANEL */}
     <div className={css`
     margin: auto;
-    max-width: 1000px;
+    max-width: ${bodyWidth}px;
+    min-height: ${this.props.minHeight};
     padding: ${rhythm(2)};
     padding-top: ${rhythm(1.5)};
     overflow: auto;
@@ -341,7 +350,7 @@ class Layout extends React.Component{
             height: 200px;
         `}>
         <div className={css`
-            max-width: 1000px;
+            max-width: ${bodyWidth}px;
             margin: 0 auto;
         `}>
       <div className={css`

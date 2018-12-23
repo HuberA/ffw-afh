@@ -16,7 +16,7 @@ const Portrait = props => (
             <h4 style={{marginBottom:'0'}}>{props.data.name}</h4>
             <p>{props.data.funktion}</p>
             {props.data.adresse &&
-            <p>{props.data.adresse.adresse.split('\n').map((val,n) => (<p key={n} style={{margin:"0"}}>{val}</p>))}</p>}
+            <div>{props.data.adresse.adresse.split('\n').map((val,n) => (<p key={n} style={{margin:"0"}}>{val}</p>))}</div>}
             {props.data.telefon &&
             <><h5 style={{marginBottom:"0"}} >Telefon:</h5>
             <p>{props.data.telefon}</p></>}
@@ -51,7 +51,7 @@ export default ( all_data ) =>{
                 );
                 case "ContentfulPortrait":
                 return(
-                    <Portrait data={eintrag} ersatzbild={data.ersatzbild.childImageSharp}/>
+                    <Portrait data={eintrag} ersatzbild={data.ersatzbild.childImageSharp} key={eintrag.id}/>
                 );
                 default:
                 return null;

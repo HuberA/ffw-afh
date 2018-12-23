@@ -123,7 +123,6 @@ exports.createPages = ({ graphql, actions}) => {
             );
             yearsSet = new Set(allYears);
             const years = Array.from(yearsSet.values())
-            //const allYears = Array.from(yearsSet.values())
             createPage({
                 path: `/einsaetze/`,
                 component: path.resolve(`./src/templates/einsaetze.js`),

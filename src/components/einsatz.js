@@ -8,6 +8,28 @@ import Seo from "../components/seo"
 const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
 const formatTime = {hour: 'numeric', minute: 'numeric'}
 
+const ExtLink = ( {link, name, i}) => (
+    <a href={link} alt={`Presselink ${i}`} target="_blank" rel="noopener noreferrer">{name}</a>
+)
+
+const Presselinks = ({data}) => {
+    const linkNames = data.map(url => url.match(/[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/)[0])
+    return(
+        <>
+        <tr>
+            <td>Presselink</td><td> <ExtLink link={data[0]} name={linkNames[0]} i={0}/></td>
+        </tr>
+        { data.length > 1 &&
+            data.slice(1).map((link, i) => (
+            <tr key={i+1}>
+                <td></td><td> <ExtLink link={link} name={linkNames[i+1]} i={i+1}/></td>
+            </tr>
+        ))
+        }
+        </>
+    )
+}
+
 export default ({data}) => {
     const einsatz = data.einsatz;
     const alarmierung = new Date(einsatz.alarmierungszeit);
@@ -77,6 +99,9 @@ export default ({data}) => {
                     </tr>
                     }
                     {alarmierte_einheiten}
+                    {einsatz.presselink && 
+                    <Presselinks data={einsatz.presselink}/>
+                    }
                 </tbody>
             </table>
                        

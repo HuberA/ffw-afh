@@ -3,6 +3,10 @@ import { css } from "react-emotion"
 import styles from "./button.module.css"
 import Dropdown from "./dropdown";
 
+const ExtLink = ( {link, name}) => (
+    <a href={link} target="_blank" rel="noopener noreferrer">{name}</a>
+)
+
 const PopupItem = (props) => props
 
 class Popup extends React.Component{
@@ -13,10 +17,6 @@ class Popup extends React.Component{
         
     }
     handleClose(groupName){
-        //const div = e.target.parentElement.parentElement;
-        //  div.style.opacity="0"; 
-        //setTimeout(() => { div.style.display = "none";});}}
-        //calendarMap = new Map([["Gruppe A"]])
         this.setState({
             showPopup: groupName
         });
@@ -49,7 +49,6 @@ class Popup extends React.Component{
             margin-bottom: 15px;
             position:fixed;
             width: 310px;
-            height: 270px;
             padding: 20px;
             top:50%; left: 50%;
             margin-left: -170px;
@@ -70,8 +69,12 @@ class Popup extends React.Component{
             <a className={styles.redbtn} href={`/${url}`}>Kalender als ics herunterladen</a>
             <p className={css`margin-bottom:10px;`} >Kopieren Sie die URL und abonnieren Sie sie in ihrem Kalenderprogramm</p>
             <input
-                style={{width: "100%"}} 
+                style={{width: "100%", marginBottom: "10px"}} 
                 onFocus={(e) => (e.target.select())} readOnly={true} value={`${window.location.protocol}//${window.location.host}/${url}`} />
+            <p style={{marginBottom:0}}>
+                <ExtLink name="Anleitung für Google Kalender" link="https://support.google.com/calendar/answer/37100?co=GENIE.Platform%3DAndroid&hl=de"/>
+            </p>
+            <ExtLink name="Anleitung für iOS" link="https://support.apple.com/de-de/HT202361"/>
         </div>
         </div>}
         </div>

@@ -1,6 +1,6 @@
 import React from "react"
 
-import styles from "./table.module.css"
+//import styles from "./table.module.css"
 
 class Table extends React.Component{
     constructor(props){
@@ -32,7 +32,7 @@ class Table extends React.Component{
          this.props.columnsFilter(this.state.width): 
          Array.from({length: this.props.header.length}, (x, i) => i);
          return (
-            <table className={styles.table}>
+            <table>
             <thead>
                 <tr>
                     {this.props.header.filter((node, index) => columnsToKeep.includes(index))
@@ -42,8 +42,7 @@ class Table extends React.Component{
                 </tr>
             </thead>
             <tbody>
-                {this.props.data.map((node, index) => {
-                    if(node){
+                {this.props.data.filter(n => n).map((node, index) => {
                     return (
                         <tr key = {node.id}>
                             {node.data.filter((node, index) => columnsToKeep.includes(index))
@@ -51,10 +50,7 @@ class Table extends React.Component{
                                 <td key={index}>{node}</td>
                             ))}
                         </tr>
-                    )}
-                    else{
-                        return null
-                    }
+                    )
                 }
                 )
                 }

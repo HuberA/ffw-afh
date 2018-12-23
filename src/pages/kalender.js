@@ -20,9 +20,9 @@ const TerminLink = props => (
         {props.children}
     </Link>
 );
-const description = "Webkalender der Freiwilligen Feuerwehr Altfrauhofen"
+const description = "Kalender der Freiwilligen Feuerwehr Altfrauhofen"
 export default ({ data }) =>(
-    <Layout>
+    <Layout minHeight="500px">
         <Seo title={`Feuerwehrkalender`} 
                  description_short={description}
                  description_long={description}
@@ -33,7 +33,7 @@ export default ({ data }) =>(
             <PopupItem name="Gruppe A" value="ffwa.ics"/>
             <PopupItem name="Gruppe B" value="ffwb.ics"/>
             <PopupItem name="Gruppe C" value="ffwc.ics"/>
-            <PopupItem name="Gruppe D" value="ffwd.ics"/>
+            {/*<PopupItem name="Gruppe D" value="ffwd.ics"/>*/}
             <PopupItem name="Jugend" value="ffwj.ics"/>
             <PopupItem name="Feuerwehrhaus" value="fwhaus.ics"/> 
         </Popup>

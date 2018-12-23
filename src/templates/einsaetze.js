@@ -117,7 +117,7 @@ export default ({ data, pageContext }) =>  {
     let table_list = []
     const yearsSet = new Set()
     for(let [_, einsaetze] of grouped){ 
-        table_list.push(<EinsatzTable einsaetze={einsaetze}/>)
+        table_list.push(<EinsatzTable einsaetze={einsaetze} key={einsaetze[0].id}/>)
         yearsSet.add(einsaetze[0].alarmierungszeit.getFullYear())
     }
     const year = yearsSet.values().next().value;
