@@ -19,7 +19,10 @@ const Portrait = props => (
             <div>{props.data.adresse.adresse.split('\n').map((val,n) => (<p key={n} style={{margin:"0"}}>{val}</p>))}</div>}
             {props.data.telefon &&
             <><h5 style={{marginBottom:"0"}} >Telefon:</h5>
-            <p>{props.data.telefon}</p></>}
+            <p style={{marginBottom:"0"}}>{props.data.telefon}</p></>}
+            {props.data.email &&
+            <><h5 style={{marginBottom:"0"}} >E-Mail:</h5>
+            <p>{props.data.email}</p></>}
         </div>
     </div>
 )
@@ -82,6 +85,7 @@ query ($seite: String!) {
           name
           funktion
           telefon
+          email
           adresse {
             adresse
           }
