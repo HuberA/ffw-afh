@@ -115,6 +115,9 @@ export default ({data}) => {
                 <Map lat={einsatz.einsatzortGeo.lat} lng={einsatz.einsatzortGeo.lon} />
             }
             <Navigation previous={data.previous} next={data.next} parent="" path="einsaetze" name="Einsatz"/>
+            <p> <b>Wichtiger Hinweis:</b> Auf unserer Internetseite berichten wir ausführlich (also auch mit Bildmaterial) über unser Einsatzgeschehen. 
+                Bilder werden erst gemacht, wenn das Einsatzgeschehen dies zulässt! Es werden keine Bilder von Verletzten oder Toten gemacht oder hier veröffentlicht!
+                Sollten Sie Einwände gegen die hier veröffentlichen Fotos oder Berichte haben, wenden Sie sich bitte vertrauensvoll an unseren Webmaster.</p>
         </Layout>
     )
 }
