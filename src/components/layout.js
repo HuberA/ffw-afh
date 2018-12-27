@@ -241,7 +241,7 @@ class Layout extends React.Component{
                 color: ${feuerwehrRot};
                 text-decoration: none;
                 font-size: 2.5rem;
-                margin-left: 1.5rem;
+                margin-left: 8.5rem;
                 `}>
                 {data.site.siteMetadata.title}</Link>
         </div>

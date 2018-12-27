@@ -154,7 +154,7 @@ query {
             }
           }
         }
-        titelbild:file(relativePath: {eq: "LF16_007a.jpg"}) {
+        titelbild:file(relativePath: {eq: "title.jpg"}) {
           childImageSharp {
             fluid(maxWidth: 1000, traceSVG: {
               color: "#A81C1C"
