@@ -23,15 +23,16 @@ class Slideshow extends React.Component{
     
     }
     render(){
-        if (this.props.images.length === 1)
-            return <Img fluid={this.props.images[0].fluid} backgroundColor="#A81C1C"/>
-        else if(this.props.images.length > 0) 
+        const images = this.props.images.filter(i => i !== null)
+        if (images.length === 1)
+            return <Img fluid={images[0].fluid} backgroundColor="#A81C1C"/>
+        else if(images.length > 0) 
         return(
             <div className={styles.container}>
-            {this.props.images.map((image, index) =>{ 
+            {images.map((image, index) =>{ 
                 return (
                 <div className={styles.mySlides} style={{display:(index===this.state.slideIndex)?'block':'none'}} key={index}>
-                <div className={styles.numbertext}>{index+1} / {this.props.images.length}</div>
+                <div className={styles.numbertext}>{index+1} / {images.length}</div>
                 <Hammer onSwipe={(a) => this.handleSwipe(a)}>
                 <img src={image.fluid.src} alt={image.title} style={{display: "block", marginLeft: "auto", marginRight: "auto"}}/>
                 </Hammer>
@@ -41,12 +42,12 @@ class Slideshow extends React.Component{
             <div className={styles.prev} onClick={(e) => this.plusSlides(-1)}>❮</div>
             <div className={styles.next} onClick={(e) => this.plusSlides(1)}>❯</div>
           
-            {this.props.images[this.state.slideIndex].title && <div className={styles.captioncontainer}>
-              <p id="caption">{this.props.images[this.state.slideIndex].title}</p>
+            {images[this.state.slideIndex].title && <div className={styles.captioncontainer}>
+              <p id="caption">{images[this.state.slideIndex].title}</p>
             </div>}
           
             <div className={styles.row}>
-            {this.props.images.map((img, index) => { return (
+            {images.map((img, index) => { return (
                 <div className={styles.column} key={index} onClick={(e) => this.currentSlide(index)}>
                     <Img 
                     className={`${styles.demo} ${styles.cursor} ${(this.state.slideIndex === index)?styles.active:''}`}
