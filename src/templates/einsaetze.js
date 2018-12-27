@@ -127,7 +127,7 @@ export default ({ data, pageContext }) =>  {
             <Seo title={`Einsätze ${year} - Feuerwehr Altfraunhofen`} 
                  description_short={description}
                  description_long={description} 
-                 url="http://feuerwehr-altfraunhofen.de/neu"/>
+                 url="http://feuerwehr-altfraunhofen.de"/>
             <h1>Einsätze</h1>
             <Dropdown options={pageContext.allYears} selected={pageContext.year} />
             {table_list}

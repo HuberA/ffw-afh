@@ -23,7 +23,7 @@ export default ( all_data ) => {
         einsatzleiter: einsatz.Einsatzleiter,
         mannschatfsstaerke: einsatz.Mannschaftsst_rke,
         einsatzbericht_text: einsatz.Einsatzbericht, 
-        alarmierte_einheiten: einsatz.alarmierte_Einheiten || '',  
+        alarmierteEinheiten: einsatz.alarmierte_Einheiten || '',  
     }
     if (einsatz.Position){
         new_einsatz.einsatzortGeo= {

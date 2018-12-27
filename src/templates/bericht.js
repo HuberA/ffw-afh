@@ -13,8 +13,8 @@ export default ({ data, pageContext }) => {
     const titelbild = post.titelbild
     const previous = pageContext.previous;
     const next = pageContext.next;
-    const id = pageContext.id;
     const image = (titelbild)?titelbild.fixed.src:null
+    const imageSize = (titelbild)?[titelbild.fixed.height, titelbild.fixed.width]:null
     const images = (post.bilder)?post.bilder.slice():[]
     if (images){
     images.unshift(titelbild)
@@ -25,7 +25,8 @@ export default ({ data, pageContext }) => {
            description_short={post.unteruberschrift}
                  description_long={post.unteruberschrift}
                  image={image} 
-                 url={`http://feuerwehr-altfraunhofen.de/neu/berichte/${post.slug}`}/>
+                 imageSize={imageSize}
+                 url={`http://feuerwehr-altfraunhofen.de/berichte/${post.slug}`}/>
         <div>
         <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
             <p className={css`color:gray;`}>
@@ -65,8 +66,10 @@ query($id: String!){
             thumb:fluid(maxWidth: 170){
               ...GatsbyContentfulFluid_tracedSVG
             }
-            fixed(width: 600){
+            fixed(width: 1200){
               src
+              width
+              height
             }
           }
     bilder{

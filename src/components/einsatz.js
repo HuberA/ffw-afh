@@ -39,18 +39,18 @@ export default ({data}) => {
     const einsatzdauer_h = Math.trunc(einsatzdauer_min / 60);
     const einsatzdauer_min_rem = einsatzdauer_min - 60 * einsatzdauer_h;
     const einsatzdauer_str = (einsatzdauer_h)?`${einsatzdauer_h} Std. und ${einsatzdauer_min_rem} Min.`:`${einsatzdauer_min} Minuten`
-    const alarmierte_einheiten = (typeof einsatz.alarmierte_einheiten !== 'undefined' && einsatz.alarmierte_einheiten.length > 0)?<>
+    const alarmierte_einheiten = (typeof einsatz.alarmierteEinheiten !== 'undefined' && einsatz.alarmierteEinheiten.length > 0)?<>
         <tr>
-            <td>Alarmierte Einheiten:</td><td>{einsatz.alarmierte_einheiten[0].name}</td>
+            <td>Alarmierte Einheiten:</td><td>{einsatz.alarmierteEinheiten[0].name}</td>
         </tr>
         {
-            einsatz.alarmierte_einheiten.slice(1).map(({name}, index) =>{ return (
+            einsatz.alarmierteEinheiten.slice(1).map(({name}, index) =>{ return (
                 <tr key={index}>
                     <td></td><td>{name}</td>
                 </tr>
             )})
         }
-    </>:"";
+    </>:null;
     const description_short = (einsatz.einsatzbericht)?einsatz.childContentfulEinsatzEinsatzberichtTextNode.childMarkdownRemark.excerpt:
         (einsatz.einsatzbericht_text && einsatz.einsatzbericht_text[0])?einsatz.einsatzbericht_text[0].substring(0, 35):null
     const description_long = (einsatz.einsatzbericht)?einsatz.childContentfulEinsatzEinsatzberichtTextNode.childMarkdownRemark.excerpt2:
@@ -62,7 +62,7 @@ export default ({data}) => {
                  description_short={description_short}
                  description_long={description_long}
                  image={image} 
-                 url="http://feuerwehr-altfraunhofen.de/neu"/>
+                 url="http://feuerwehr-altfraunhofen.de"/>
              <h1>{einsatz.einsatzart}</h1>
             <Navigation previous={data.previous} next={data.next} parent="" path="einsaetze" name="Einsatz"/>
             {einsatz.einsatzbild &&

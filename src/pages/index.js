@@ -1,6 +1,5 @@
 import React from "react"
 import Layout from "../components/layout"
-import img_fwhaus from "../images/fwhaus.jpg"
 import { css } from "react-emotion"
 import { graphql, Link } from "gatsby"
 import { color as textColor } from "../utils/typography"
@@ -9,13 +8,6 @@ import Divider from "../utils/divider"
 import Img from "gatsby-image"
 import Seo from "../components/seo"
 
-const headingImageFormat = align => css`
-border-radius: 4px;
-float: ${align};
-width: 50%;
-height: 20rem;
-object-fit: cover;
-`;
 const redButton = css`
 background-color: #A81C1C;
 color: #fff;
@@ -33,17 +25,19 @@ const description = "Offizielle Website der Freiwilligen Feuerwehr Altfrauhofen"
 export default ( {data}) => {
     const nodes =  data.einsatz.edges
     const berichte = data.berichte.edges
+    const titelbild = data.titelbild.childImageSharp.fluid
    return (<Layout>
       <Seo title={`Freiwillige Feuerwehr Altfraunhofen e.V.`} 
                  description_short={description}
                  description_long={description}
-                 image={img_fwhaus}
-                 url="http://feuerwehr-altfraunhofen.de/neu"/>
+                 image={titelbild.src}
+                 imageSize={[titelbild.presentationHeight, titelbild.presentationWidth]}
+                 url="http://feuerwehr-altfraunhofen.de"/>
     
     <div className={css`
         overflow: auto;
     `}>
-    <Img fluid={data.fwhaus.childImageSharp.fluid} alt="Feuerwehr-Gerätehaus"></Img>
+    <Img fluid={data.titelbild.childImageSharp.fluid} alt="Feuerwehr-Gerätehaus"></Img>
     </div>
     
     <Divider/>
@@ -160,7 +154,7 @@ query {
             }
           }
         }
-        fwhaus:file(relativePath: {eq: "fwhaus.jpg"}) {
+        titelbild:file(relativePath: {eq: "LF16_007a.jpg"}) {
           childImageSharp {
             fluid(maxWidth: 1000, traceSVG: {
               color: "#A81C1C"
@@ -168,6 +162,8 @@ query {
               blackOnWhite: true
             }) {
                 ...GatsbyImageSharpFluid_tracedSVG
+                presentationWidth
+                presentationHeight
             }
           }
         }

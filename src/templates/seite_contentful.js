@@ -30,7 +30,7 @@ export default ( all_data ) =>{
     return(
     <Layout>
         <Seo title={`${seite.seitentitel} - Feuerwehr Altfraunhofen`} 
-                 url="http://feuerwehr-altfraunhofen.de/neu"/>
+                 url="http://feuerwehr-altfraunhofen.de"/>
         <h1>{data.contentfulSeitenubersicht.seitentitel}</h1>
         {data.contentfulSeitenubersicht.seiteneintrag.map((eintrag, index) => {
             switch(eintrag.__typename){
