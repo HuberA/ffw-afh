@@ -36,7 +36,7 @@ query ($id: String!) {
         id
       }
       einsatzbild{
-        fluid(maxWidth: 1000){
+        fluid(maxWidth: 1000, maxHeight: 800){
           ...GatsbyContentfulFluid_tracedSVG
         }
         fixed(width: 600){
