@@ -4,6 +4,8 @@ import Img from "gatsby-image"
 import Map from "../components/map"
 import Navigation from "../components/navigation"
 import Seo from "../components/seo"
+import moment from 'moment';
+import 'moment-timezone';
 
 const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
 const formatTime = {hour: 'numeric', minute: 'numeric'}
@@ -32,8 +34,8 @@ const Presselinks = ({data}) => {
 
 export default ({data}) => {
     const einsatz = data.einsatz;
-    const alarmierung = new Date(einsatz.alarmierungszeit);
-    const einsatzende = new Date(einsatz.einsatzende);
+    const alarmierung = moment.tz(einsatz.alarmierungszeit, "Europe/Berlin").toDate();
+    const einsatzende = moment.tz(einsatz.einsatzende, "Europe/Berlin").toDate();
     const einsatzdauer = einsatzende - alarmierung;
     const einsatzdauer_min = einsatzdauer / 60 /1000;
     const einsatzdauer_h = Math.trunc(einsatzdauer_min / 60);

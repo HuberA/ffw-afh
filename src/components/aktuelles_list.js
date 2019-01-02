@@ -3,6 +3,8 @@ import { Link} from "gatsby"
 import { color as textColor } from "../utils/typography"
 import { css } from "react-emotion"
 import Img from "gatsby-image"
+import moment from 'moment';
+import 'moment-timezone';
 
 const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -36,7 +38,7 @@ export default ( props ) => {
                     }
                 `}>
                  <p className={css`color:gray;`}>
-                    {new Date(aktuelles.datum).toLocaleString("de-DE", formatOptions)}
+                    {moment.tz(aktuelles.datum, 'Europe/Berlin').toDate().toLocaleString("de-DE", formatOptions)}
                 </p>
                 <h3>{aktuelles.titel}</h3>
                 <h4>{aktuelles.unteruberschrift}</h4>

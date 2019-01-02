@@ -7,6 +7,8 @@ import AktuellesList from "../components/aktuelles_list"
 import Divider from "../utils/divider"
 import Img from "gatsby-image"
 import Seo from "../components/seo"
+import moment from 'moment';
+import 'moment-timezone';
 
 const redButton = css`
 background-color: #A81C1C;
@@ -75,7 +77,7 @@ export default ( {data}) => {
                     <h3 className={css`margin-bottom: 0;`} >{node.kurzbericht}</h3>
                     <p className={css`color:gray;`}>
                        
-                        {new Date(node.alarmierungszeit).toLocaleString("de-DE", formatOptions)}
+                        {moment.tz(node.alarmierungszeit, "Europe/Berlin").toDate().toLocaleString("de-DE", formatOptions)}
                     </p>
                     <p>{node.einsatzbericht.childMarkdownRemark.excerpt}</p>
                     <div className={redButton}>Mehr Details &raquo;</div>
