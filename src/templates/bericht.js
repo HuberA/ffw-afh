@@ -5,6 +5,8 @@ import { css } from "react-emotion"
 import Navigation from "../components/navigation"
 import Seo from "../components/seo"
 import ThumbnailSlideshow from "../components/thumbnail_slideshow"
+import moment from 'moment';
+import 'moment-timezone';
 
 const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -30,7 +32,7 @@ export default ({ data, pageContext }) => {
         <div>
         <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
             <p className={css`color:gray;`}>
-                    {new Date(post.datum).toLocaleString("de-DE", formatOptions)}
+                    {moment.tz(post.datum, "Europe/Berlin").toDate().toLocaleString("de-DE", formatOptions)}
             </p>
             <h1>{post.titel}</h1>
             <ThumbnailSlideshow images={images}/>:

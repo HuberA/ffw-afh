@@ -6,7 +6,8 @@ import {Popup, PopupItem} from "../components/popup"
 import { css } from "react-emotion"
 import { color as textColor } from "../utils/typography"
 import Seo from "../components/seo"
-
+import moment from 'moment';
+import 'moment-timezone';
 
 const dayFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
 const timeFormatOptions = {hour: '2-digit', minute: '2-digit'};
@@ -46,7 +47,7 @@ export default ({ data }) =>(
                 {title: 'Beschreibung'}
             ]}
         data={data.allContentfulTermin.edges.map(({node}, index) =>{
-            const datum = new Date(node.datum)
+            const datum = moment.tz(node.datum, 'Europe/Berlin').toDate();
             const next_day = new Date(datum.getFullYear(), datum.getMonth(), datum.getDate()+1)
             if (next_day < new Date()) return null
             const groupText = node.gruppe? node.gruppe.join(', ') + ': ': ''

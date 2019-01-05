@@ -262,6 +262,10 @@ exports.createPages = ({ graphql, actions}) => {
           }
         `
         ).then(result => {
+            if(!result.data){
+                resolve()
+                return
+            }
             const cal_path = path.posix.join(process.cwd(), DEPLOY_DIR, 'ffw.ics')
             const cal = ical({
                 domain: 'feuerwehr-altfraunhofen.de',

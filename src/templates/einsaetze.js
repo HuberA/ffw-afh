@@ -7,6 +7,8 @@ import { color as textColor } from "../utils/typography"
 import Img from "gatsby-image"
 import Seo from "../components/seo"
 import Dropdown from "../components/dropdown";
+import moment from 'moment';
+import 'moment-timezone';
 
 const EinsatzLink = props => (
     <Link to={`/einsaetze/${props.id}`} className={css`
@@ -72,7 +74,7 @@ export default ({ data, pageContext }) =>  {
         {
             id: node.id,
             kurzbericht: node.kurzbericht,
-            alarmierungszeit: new Date(node.alarmierungszeit),
+            alarmierungszeit: moment.tz(node.alarmierungszeit, "Europe/Berlin").toDate(),
             einsatzort: node.einsatzort,
             einsatzart: node.einsatzart,
             einsatzbild: node.einsatzbild
@@ -91,7 +93,7 @@ export default ({ data, pageContext }) =>  {
     return({
         id: node.id,
         kurzbericht: node.Kurzbericht,
-        alarmierungszeit: new Date(node.Alarmierung.zeitpunkt),
+        alarmierungszeit: moment.tz(node.Alarmierung.zeitpunkt, "Europe/Berlin").toDate(),
         einsatzort: node.Einsatzort,
         einsatzart: node.Einsatzart,
         einsatzbild: image

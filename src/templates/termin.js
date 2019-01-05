@@ -4,6 +4,8 @@ import Layout from "../components/layout"
 import { css } from "react-emotion"
 import Seo from "../components/seo"
 import Table from "../components/table"
+import moment from 'moment';
+import 'moment-timezone';
 
 const dayFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
 const timeFormatOptions = {hour: '2-digit', minute: '2-digit'};
@@ -27,7 +29,7 @@ const redButton = css(
 
 export default ({ data}) => {
     const termin = data.contentfulTermin
-    const datum = new Date(termin.datum)
+    const datum = moment.tz(termin.datum, 'Europe/Berlin').toDate()
     return (
     <Layout>
       <Seo title={termin.beschreibung} 
