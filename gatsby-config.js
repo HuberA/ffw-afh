@@ -12,11 +12,11 @@ module.exports = {
             options: {
                 name: "Website der Freiwilligen Feuerwehr Altfraunhofen",
                 short_name: "FFW Altfrauhofen",
-                start_ur: "/",
+                start_url: "/",
                 background_color: "#A81C1C",
                 theme_color: "#A81C1C",
-                display: "minimal-ui",
-                icon: "src/images/logo-ffw.svg"
+                display: "standalone",
+                icon: "src/images/logo-ffw-square.png"
             }
         },
         'gatsby-plugin-offline',
