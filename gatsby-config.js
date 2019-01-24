@@ -10,8 +10,8 @@ module.exports = {
         {
             resolve: `gatsby-plugin-manifest`,
             options: {
-                name: "Website der Freiwilligen Feuerwehr Altfraunhofen",
-                short_name: "FFW Altfrauhofen",
+                name: "Freiwillige Feuerwehr Altfraunhofen",
+                short_name: "Feuerwehr",
                 start_url: "/",
                 background_color: "#A81C1C",
                 theme_color: "#A81C1C",
@@ -19,7 +19,15 @@ module.exports = {
                 icon: "src/images/logo-ffw-square.png"
             }
         },
-        'gatsby-plugin-offline',
+        {
+            resolve: `gatsby-plugin-offline`,
+            options: {
+                importScripts: [
+                  `./sw-extend.js`
+                ],
+                cacheId: `ffw-afh-offline`
+              }
+        },
         'gatsby-plugin-react-helmet',
         `gatsby-plugin-sharp`,
         {
