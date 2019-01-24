@@ -79,7 +79,7 @@ class PushMessage extends React.Component{
                 applicationServerKey: convertedVapidKey
         })
        .then(subscription=>{
-           fetch('http://192.168.1.187:5566/register', {
+           fetch('.netlify/functions/hello', {
                method: 'post',
                headers: {
                    'Content-type': 'application/json'
