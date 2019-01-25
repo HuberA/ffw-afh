@@ -18,12 +18,16 @@ exports.handler = function(event, context, callback) {
     const data = JSON.parse(event.body)
     const subscription = data.subscription;
     const options = data.options;
+    console.log('data:', data)
+
     let params ={
         TableName: 'fw_subscriptions',
         Item: {
-            'endpoint' : {S: subscription.endpoint_id},
+            'endpoint_id' : {S: subscription.endpoint},
             'subscription_data' : {S: JSON.stringify(subscription)},
-            'options' : {S: JSON.stringify(options) }
+            'bericht' : {BOOL: options.bericht },
+            'einsatz' : {BOOL: options.einsatz},
+            'termin'  : {BOOL: options.termin}
         }
     }
 
@@ -34,6 +38,15 @@ exports.handler = function(event, context, callback) {
       console.log("Error", err);
       callback(err, null)
     } else {
+      
+      data = {
+          data:{
+              success: true,
+              bericht: options.bericht,
+              termin: options.termin,
+              einsatz: options.einsatz
+          }
+      }
       console.log("Success", data);
       callback(null, {
         statusCode: 200,
