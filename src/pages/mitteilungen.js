@@ -170,7 +170,7 @@ class PushMessage extends React.Component{
                  url="http://feuerwehr-altfraunhofen.de"/>
         <h1>Benachrichtigungen</h1>
         {(this.state.serviceWorker)?<>
-        <p>Falls Ihr Browser dies unterstützt können wir sie informieren, wenn es auf der Seite etwas neues gibt,
+        <p>Falls Ihr Browser dies unterstützt können wir Sie informieren, wenn es auf der Seite etwas neues gibt,
             selbst wenn Sie die Website der Feuerwehr Altfraunhofen nicht geöffnet haben.</p>
         <p> Hier können Sie auswählen, bei welchen Ereignissen Sie benachrichtigt werden wollen.</p>
         <form>
