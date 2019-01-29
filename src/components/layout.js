@@ -367,6 +367,7 @@ class Layout extends React.Component{
       <BottomLink to="/datenschutz" text="Datenschutz" />
       <BottomLink to="/anfahrt" text="Anfahrt" />
       <BottomLink to="/neumitglied" text="Werde Mitglied!"/>
+      <BottomLink to="/mitteilungen" text="Benachrichtigungen"/>
       {this.state.onTop > 20 && 
         <button className={`${styles.redbtnbtn} ${styles.bottomright}`} onClick={() => this.topFunction()} title="Gehe Hoch">Hoch</button>}
       </div>

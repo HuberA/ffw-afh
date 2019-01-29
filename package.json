@@ -8,7 +8,9 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
+    "@babel/plugin-transform-object-assign": "^7.2.0",
     "@types/node": "^10.11.4",
+    "aws-sdk": "^2.393.0",
     "dotenv": "^6.0.0",
     "emotion": "^9.2.12",
     "emotion-server": "^9.2.12",
@@ -39,6 +41,7 @@
     "react-typography": "^0.16.13",
     "scriptjs": "^2.5.9",
     "typography": "^0.16.17",
-    "typography-theme-bootstrap": "^0.16.7"
+    "typography-theme-bootstrap": "^0.16.7",
+    "web-push": "^3.3.3"
   }
 }

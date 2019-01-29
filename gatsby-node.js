@@ -91,6 +91,18 @@ exports.createPages = ({ graphql, actions}) => {
                 })
 
             })
+            const einsaetze = result.data.allContentfulEinsatz.edges;
+            const einsatz = einsaetze[0]
+            createPage({
+                path: "/einsaetze/latest",
+                component: path.resolve(`./src/templates/einsatz_cms.js`),
+                context: {
+                    id: einsatz.node.id,
+                    previous: einsatz.previous && einsatz.previous.id,
+                    next: einsatz.next && einsatz.next.id
+                }
+            })
+            einsaetze[einsaetze.length-1]
         resolve()
         })
     }),
