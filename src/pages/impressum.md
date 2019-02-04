@@ -9,7 +9,7 @@ Veldener Straße 15
 ### Vereinsvertreter:
 
 1. Vorsitzender: Huber Rudolf
-2. Vorsitzender: Ossner Johannes
+2. Vorsitzender: Oßner Johannes
 
 #### Webdesign und -management:
 Andreas Huber
