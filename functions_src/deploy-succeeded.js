@@ -45,17 +45,7 @@ function setUpdateTime(field, date, callback){
         });
 }
 
-function notifyClients(item, ddb, contentType, callback){
-    const payload = {
-        topic: contentType,
-        title: item.fields.kurzbericht,
-        body: `Einsatz in ${item.fields.einsatzort}`,
-        data: 'test data',
-        url: '/einsaetze/latest',
-    }
-    if (item.fields.einsatzbild != undefined){
-        payload.image = item.fields.einsatzbild.fields.file.url
-    }
+function notifyClients(payload, ddb, contentType, callback){
     var params = {
         ExpressionAttributeValues: {
         ":v1": {
@@ -79,7 +69,7 @@ function notifyClients(item, ddb, contentType, callback){
                 statusCode: 200,
                 body: JSON.stringify(statusCodes),
                 })
-            });
+            }).catch(console.err);
          }  
         });
 }
@@ -94,6 +84,57 @@ exports.handler = function(event, context, callback) {
             'field_id' : {S: "einsatz"},
         }
     }
+
+    
+    const sendBerichte = () =>{
+        let params ={
+            TableName: 'fw_updates',
+            Key: {
+                'field_id' : {S: "bericht"},
+            }
+        }
+        ddb.getItem(params, function(err, data){
+            if (err){
+                console.error("Error", err)
+                callback(err, err.stack);
+            } else{
+                console.log(data)
+                const lastUpdate = (data.Item !== undefined)?data.Item.last_update.S: "2018-01-01";
+                client.getEntries({
+                    content_type: 'bericht',
+                    'sys.createdAt[gt]': lastUpdate,
+                    order: 'sys.createdAt'
+                    })
+                    .then((response) => {
+                        if (response.items.length >= 1){
+                            console.log('got one or more items')
+                            const item = response.items[response.items.length-1]
+                            const creationTime = item.sys.createdAt
+                            const payload = {
+                                topic: 'bericht',
+                                title: item.fields.titel,
+                                body: item.fields.unteruberschrift,
+                                data: 'test data',
+                                url: `/berichte/${item.fields.slug}`,
+                            }
+                            if (item.fields.titelbild != undefined){
+                                payload.image = `${item.fields.titelbild.fields.file.url}?w=1600&h=1100`;
+                            }
+                            console.log('payload:', payload)
+                            setUpdateTime('bericht', creationTime, callback)
+                            notifyClients(payload, ddb, 'bericht', callback)
+                        }
+                        else{
+                            callback(null, {
+                                statusCode: 200,
+                                body: 'No updates'
+                            })
+                        }
+                    })
+                    .catch(e => callback(e, null));
+                }
+            });
+    }
     ddb.getItem(params, function(err, data){
         if (err){
             console.error("Error", err)
@@ -101,10 +142,10 @@ exports.handler = function(event, context, callback) {
         } else{
             client.getEntries({
                 content_type: 'einsatz',
-                'sys.createdAt[gte]': data.Item.last_update.S
+                'sys.createdAt[gt]': data.Item.last_update.S,
+                order: 'sys.createdAt'
                 })
                 .then((response) => {
-                    //console.log(response)
                     if (response.items.length >= 1){
                         console.log('got one or more items')
                         // for testing an item with image:
@@ -113,13 +154,27 @@ exports.handler = function(event, context, callback) {
                         
                         const creationTime = item.sys.createdAt
                         setUpdateTime('einsatz', creationTime, callback)
-                        notifyClients(item, ddb, 'einsatz', callback)
+                        const payload = {
+                            topic: 'einsatz',
+                            title: item.fields.kurzbericht,
+                            body: `Einsatz in ${item.fields.einsatzort}`,
+                            data: 'test data',
+                            url: '/einsaetze/latest',
+                        }
+                        if (item.fields.einsatzbild != undefined){
+                            payload.image = item.fields.einsatzbild.fields.file.url
+                        }
+                        notifyClients(payload, ddb, 'einsatz', callback)
+                    }
+                    else{
+                        sendBerichte()
                     }
                 })
                 .catch(e => callback(e, null));
+
         }
     });
-
+    
    
     
 }
