@@ -2,7 +2,6 @@ import React from "react"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import styles from "../components/button.module.css"
-import { async } from "q";
 
 function urlBase64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -113,7 +112,7 @@ class PushMessage extends React.Component{
                    serverstateKnown: true,
                    subscribe: anything? "yes": "not yet"
                });
-               if (anything && value != undefined){
+               if (anything && value !== undefined){
                    const values = [];
                    if (bericht) values.push('Berichte')
                    if (einsatz) values.push('Einsätze')
@@ -153,7 +152,7 @@ class PushMessage extends React.Component{
         }
     }
     getButtonStyle(){
-        if(["not yet", "updated"].indexOf(this.state.subscribe) != -1){
+        if(["not yet", "updated"].indexOf(this.state.subscribe) !== -1){
             return styles.redbtn;
         }else{
             return styles.greybtn;

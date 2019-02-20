@@ -41,7 +41,9 @@ export default ({data}) => {
     const einsatzdauer_h = Math.trunc(einsatzdauer_min / 60);
     const einsatzdauer_min_rem = einsatzdauer_min - 60 * einsatzdauer_h;
     const einsatzdauer_str = (einsatzdauer_h)?`${einsatzdauer_h} Std. und ${einsatzdauer_min_rem} Min.`:`${einsatzdauer_min} Minuten`
-    const alarmierte_einheiten = (typeof einsatz.alarmierteEinheiten !== 'undefined' && einsatz.alarmierteEinheiten.length > 0)?<>
+    const alarmierte_einheiten = (typeof einsatz.alarmierteEinheiten !== 'undefined' 
+                                  && einsatz.alarmierteEinheiten !== null 
+                                  && einsatz.alarmierteEinheiten.length > 0)?<>
         <tr>
             <td>Alarmierte Einheiten:</td><td>{einsatz.alarmierteEinheiten[0].name}</td>
         </tr>
