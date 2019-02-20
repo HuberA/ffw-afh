@@ -18,7 +18,6 @@ exports.handler = function(event, context, callback) {
     const data = JSON.parse(event.body)
     const subscription = data.subscription;
     const options = data.options;
-    console.log('data:', data)
 
     let params ={
         TableName: 'fw_subscriptions',
