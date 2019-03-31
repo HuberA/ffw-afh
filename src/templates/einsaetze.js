@@ -69,7 +69,6 @@ const dayFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
 const timeFormatOptions = {hour: '2-digit', minute: '2-digit'};
 
 export default ({ data, pageContext }) =>  {
-    // all_data = data.new_data.edges.slice()
     const mappedNew = (data.new_data)?data.new_data.edges.map(({node}, index) => (
         {
             id: node.id,
@@ -140,9 +139,11 @@ export default ({ data, pageContext }) =>  {
 
 
 export const query= graphql`
-query ($yearExp: String!) {
-    old_data: allData1Json(sort: {fields: [Alarmierung___zeitpunkt], order: DESC},
-         filter: {Alarmierung: {zeitpunkt: {regex: $yearExp}}}) {
+query ($startYear: Date!, $endYear: Date!) {
+  old_data: allData1Json(
+    sort: {fields: [Alarmierung___zeitpunkt], order: DESC},
+    filter: {Alarmierung: {zeitpunkt: {gte: $startYear, lte: $endYear}}}
+  ) {
       edges {
         node {
           id
@@ -177,10 +178,10 @@ query ($yearExp: String!) {
             }
           }
         }
-      
-      
-    new_data: allContentfulEinsatz(sort: {fields: [alarmierungszeit], order: DESC}, 
-        filter: {alarmierungszeit: {regex: $yearExp}}) {
+      new_data: allContentfulEinsatz(
+        sort: {fields: [alarmierungszeit], order: DESC},
+        filter: {alarmierungszeit: {gte: $startYear, lte: $endYear}}
+      ) {
       edges {
         node {
           id

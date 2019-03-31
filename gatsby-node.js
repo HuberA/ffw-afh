@@ -140,7 +140,8 @@ exports.createPages = ({ graphql, actions}) => {
                 component: path.resolve(`./src/templates/einsaetze.js`),
                 context: {
                     year: years[0],
-                    yearExp: `/^${years[0]}/`,
+                    startYear: `${years[0]}-01-01`,
+                    endYear:`${years[0]}-12-31`,
                     allYears: years 
                 }
             })
@@ -150,7 +151,8 @@ exports.createPages = ({ graphql, actions}) => {
                     component: path.resolve(`./src/templates/einsaetze.js`),
                     context: {
                         year: year,
-                        yearExp: `/^${year}/`,
+                        startYear: `${year}-01-01`,
+                        endYear:`${year}-12-31`,
                         allYears: years
                     }
                 })
