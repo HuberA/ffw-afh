@@ -58,11 +58,11 @@ function notifyClients(payload, ddb, contentType, callback){
        ddb.scan(params, function(err, data) {
          if (err) console.log(err, err.stack); // an error occurred
          else{
-             console.log('Number of subscriptions: ', data.Count)
+             console.log('Number of subscriptions: ', data.Count);
              const promises = data.Items.map(subscription => {
                  const sub = JSON.parse(subscription.subscription_data.S)
                  return webpush.sendNotification(sub,JSON.stringify(payload), webpushOptions)
-             })
+             }).catch(console.err);
              Promise.all(promises).then(values =>{
                 const statusCodes = values.map(v => v.statusCode);
                callback(null, {
