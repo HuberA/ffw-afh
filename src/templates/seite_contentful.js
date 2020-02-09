@@ -91,7 +91,7 @@ query ($seite: String!) {
           }
           bild {
             fluid(maxWidth: 300) {
-                ...GatsbyContentfulFluid_tracedSVG
+                ...GatsbyContentfulFluid
             }
           }
           name
@@ -103,10 +103,10 @@ query ($seite: String!) {
             title
             description
             thumb: fluid(maxWidth: 170, maxHeight: 100, resizingBehavior: PAD, background: "white") {
-                ...GatsbyContentfulFluid_tracedSVG
+                ...GatsbyContentfulFluid
             }
             fluid(maxWidth: 1000, maxHeight: 700, background: "white") {
-                ...GatsbyContentfulFluid_tracedSVG
+                ...GatsbyContentfulFluid
             }
           }
         }
@@ -115,7 +115,7 @@ query ($seite: String!) {
     ersatzbild: file(relativePath: {eq: "noch_kein_bild_verfgbar.jpg"}) {
         childImageSharp {
           fluid(maxWidth: 300) {
-            ...GatsbyImageSharpFluid_tracedSVG
+            ...GatsbyImageSharpFluid
           }
         }
       }

@@ -21,7 +21,7 @@ function urlBase64ToUint8Array(base64String) {
   const vapidPublicKey = 'BPKIl4pHeFbSzB9oz3oPlaYI9qww02eBAh2jkRhv6NkZus9k9IppBvv2VhmFYJczCoOEpp8kxtf__IfrzOAHEdg';
   
 
-const description = "Benachrichtigungen von der Feuerwehr Altfraunhofen"
+const description = "Benachrichtigungen von der Feuerwehr Altfraunhofen";
 
 class PushMessage extends React.Component{
     constructor(props){

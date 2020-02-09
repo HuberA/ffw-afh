@@ -114,7 +114,7 @@ query {
             einsatzbild {
               id
               fixed(width: 150, height: 150) {
-                ...GatsbyContentfulFixed_tracedSVG
+                ...GatsbyContentfulFixed
               }
             }
           }
@@ -134,10 +134,10 @@ query {
             titelbild {
               id
               fixed(height: 150, width: 150) {
-                ...GatsbyContentfulFixed_tracedSVG
+                ...GatsbyContentfulFixed
               }
               fluid(maxWidth: 400, background: "red" ){
-                ...GatsbyContentfulFluid_tracedSVG
+                ...GatsbyContentfulFluid
             }
             }
             slug
@@ -152,7 +152,7 @@ query {
               turnPolicy: TURNPOLICY_MINORITY
               blackOnWhite: true
             }) {
-                ...GatsbyImageSharpFixed_tracedSVG
+                ...GatsbyImageSharpFixed
             }
           }
         }
@@ -163,7 +163,7 @@ query {
               turnPolicy: TURNPOLICY_MINORITY
               blackOnWhite: true
             }) {
-                ...GatsbyImageSharpFluid_tracedSVG
+                ...GatsbyImageSharpFluid
                 presentationWidth
                 presentationHeight
             }
@@ -176,7 +176,7 @@ query {
               turnPolicy: TURNPOLICY_MINORITY
               blackOnWhite: true
             }) {
-                ...GatsbyImageSharpFluid_tracedSVG
+                ...GatsbyImageSharpFluid
             }
           }
         }
@@ -187,7 +187,7 @@ query {
               turnPolicy: TURNPOLICY_MINORITY
               blackOnWhite: true
             }) {
-                ...GatsbyImageSharpFluid_tracedSVG
+                ...GatsbyImageSharpFluid
             }
           }
         }

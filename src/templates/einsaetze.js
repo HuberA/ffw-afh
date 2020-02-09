@@ -172,7 +172,7 @@ query ($startYear: Date!, $endYear: Date!) {
               relativePath
               childImageSharp {
                 fixed(width: 50) {
-                  ...GatsbyImageSharpFixed_tracedSVG
+                  ...GatsbyImageSharpFixed
                 }
               }
             }
@@ -191,7 +191,7 @@ query ($startYear: Date!, $endYear: Date!) {
           einsatzart
           einsatzbild {
             fixed(width: 50) {
-                ...GatsbyContentfulFixed_tracedSVG
+                ...GatsbyContentfulFixed
             }
           }
         }
