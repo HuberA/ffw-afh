@@ -28,10 +28,10 @@ query {
          titelbild {
            id
            fixed(height: 150, width: 150) {
-             ...GatsbyContentfulFixed_tracedSVG
+             ...GatsbyContentfulFixed
            }
            fluid(maxWidth: 400){
-            ...GatsbyContentfulFluid_tracedSVG
+            ...GatsbyContentfulFluid
         }
          }
          slug

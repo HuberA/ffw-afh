@@ -63,10 +63,10 @@ query($id: String!){
     }
     titelbild {
             fluid(maxWidth: 1000){
-              ...GatsbyContentfulFluid_tracedSVG
+              ...GatsbyContentfulFluid
             }
             thumb:fluid(maxWidth: 170){
-              ...GatsbyContentfulFluid_tracedSVG
+              ...GatsbyContentfulFluid
             }
             fixed(width: 1200){
               src
@@ -78,10 +78,10 @@ query($id: String!){
       title
       description
       thumb:fluid(maxWidth: 170, maxHeight: 100,resizingBehavior:PAD, background:"white"){
-        ...GatsbyContentfulFluid_tracedSVG
+        ...GatsbyContentfulFluid
       }
       fluid(maxWidth: 1000, maxHeight: 700){
-        ...GatsbyContentfulFluid_tracedSVG
+        ...GatsbyContentfulFluid
       }
     }
   }

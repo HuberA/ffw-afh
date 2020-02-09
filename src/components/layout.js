@@ -214,7 +214,7 @@ class Layout extends React.Component{
             fixed(height: 150
                 traceSVG: { background: "#f2f8f3", color: "#A81C1C" }
                 ){
-                ...GatsbyImageSharpFixed_tracedSVG
+                ...GatsbyImageSharpFixed
             }
         }
         

@@ -49,7 +49,7 @@ query ($id: String!, $bild: String!) {
     image: file(sourceInstanceName: {eq: "data"}, relativePath: {eq: $bild}) {
       childImageSharp {
         fluid(maxWidth: 1000){
-          ...GatsbyImageSharpFluid_tracedSVG
+          ...GatsbyImageSharpFluid
         }
         fixed(width: 600){
           src
