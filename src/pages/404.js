@@ -1,8 +1,11 @@
 import React from "react"
-import Layout from "../components/layout"
+import {LayoutComponent} from "../components/layout"
 
-export default () =>(
-    <Layout>
+const View = () =>(
+    <LayoutComponent>
         <h1>Die angegebene Seite wurde nicht gefunden!</h1>
-    </Layout>
-)
+    </LayoutComponent>
+);
+
+export default View;
+

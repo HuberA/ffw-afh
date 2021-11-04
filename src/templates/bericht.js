@@ -1,16 +1,16 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Layout from "../components/layout"
-import { css } from "react-emotion"
+import {LayoutComponent} from "../components/layout"
+/** @jsx jsx */
+import { jsx, css } from "@emotion/react";
 import Navigation from "../components/navigation"
 import Seo from "../components/seo"
 import ThumbnailSlideshow from "../components/thumbnail_slideshow"
-import moment from 'moment';
-import 'moment-timezone';
+const { DateTime } = require("luxon");
 
 const formatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-export default ({ data, pageContext }) => {
+const berichtView = ({ data, pageContext }) => {
     const post = data.contentfulArtikel
     const titelbild = post.titelbild
     const previous = pageContext.previous;
@@ -22,7 +22,7 @@ export default ({ data, pageContext }) => {
     images.unshift(titelbild)
     }
     return (
-    <Layout>
+    <LayoutComponent>
       <Seo title={post.titel} 
            description_short={post.unteruberschrift}
                  description_long={post.unteruberschrift}
@@ -31,58 +31,73 @@ export default ({ data, pageContext }) => {
                  url={`http://feuerwehr-altfraunhofen.de/berichte/${post.slug}`}/>
         <div>
         <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
-            <p className={css`color:gray;`}>
-                    {moment.tz(post.datum, "Europe/Berlin").toDate().toLocaleString("de-DE", formatOptions)}
-            </p>
+            <p css={css`color:gray;`}>
+              {DateTime.fromISO(post.datum)
+                    .setZone("Europe/Berlin")
+                    .setLocale("de")
+                    .toLocaleString(formatOptions)}
+               </p>
             <h1>{post.titel}</h1>
             <ThumbnailSlideshow images={images}/>:
-            <h2 className={css`margin-top: 1em`}>{post.unteruberschrift}</h2>
+            <h2 css={css`margin-top: 1em`}>{post.unteruberschrift}</h2>
             <div dangerouslySetInnerHTML={{ __html: post.fliesstext.childMarkdownRemark.html}} />
             <Navigation path="berichte" next={next} previous={previous} parent="" name="Bericht"/>
         </div>
-    </Layout>
+    </LayoutComponent>
     )
 }
-
+export default berichtView;
 export const query = graphql`
-query($id: String!){
-    contentfulArtikel(id: {eq: $id}) {
+query ($id: String!) {
+  contentfulArtikel(id: {eq: $id}) {
+    id
+    slug
+    datum
+    titel
+    unteruberschrift
+    fliesstext {
       id
-      slug
-      datum
-      titel
-      unteruberschrift
-      fliesstext {
+      childMarkdownRemark {
         id
-        childMarkdownRemark {
-          id
-          html
-          excerpt(pruneLength: 155)
-          excerpt2: excerpt(pruneLength: 65)
-        }
+        html
+        excerpt(pruneLength: 155)
+        excerpt2: excerpt(pruneLength: 65)
+      }
     }
     titelbild {
-            fluid(maxWidth: 1000){
-              ...GatsbyContentfulFluid
-            }
-            thumb:fluid(maxWidth: 170){
-              ...GatsbyContentfulFluid
-            }
-            fixed(width: 1200){
-              src
-              width
-              height
-            }
-          }
-    bilder{
+      fixed: gatsbyImageData(layout: FIXED, width: 1200)
+      thumb: gatsbyImageData(
+        layout: CONSTRAINED
+        width: 170
+        height: 100
+        resizingBehavior: PAD
+        backgroundColor: "#F3F7F4"
+      )
+      gatsbyImageData(
+        layout: CONSTRAINED
+        width: 800
+        height: 500
+        backgroundColor: "#F3F7F4"
+        resizingBehavior: PAD
+      )
+    }
+    bilder {
       title
       description
-      thumb:fluid(maxWidth: 170, maxHeight: 100,resizingBehavior:PAD, background:"white"){
-        ...GatsbyContentfulFluid
-      }
-      fluid(maxWidth: 1000, maxHeight: 700){
-        ...GatsbyContentfulFluid
-      }
+      thumb: gatsbyImageData(
+        layout: CONSTRAINED
+        width: 170
+        height: 100
+        resizingBehavior: PAD
+        backgroundColor: "#F3F7F4"
+      )
+      gatsbyImageData(
+        layout: CONSTRAINED
+        width: 800
+        height: 500
+        backgroundColor: "#F3F7F4"
+        resizingBehavior: PAD
+      )
     }
   }
 }

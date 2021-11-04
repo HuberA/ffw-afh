@@ -1,14 +1,13 @@
-import { css } from "react-emotion"
 import React from "react"
 import { Link } from "gatsby"
+/** @jsx jsx */
+import { jsx, css } from "@emotion/react";
 
-const redButton = css(
-    {
-    ':hover': {
-        'background-color': '#c02020'
-        }, 
-    },
-    css`
+const textAlignStyles = css`
+  text-align: center
+`;
+
+const redButton = (direction) => css`
     background-color: #A81C1C;
     color: #fff;
     padding: 0.6em;
@@ -17,15 +16,22 @@ const redButton = css(
     margin-bottom: 1rem;
     display: inline-block;
     transition: 0.1s
-    `);
+    :hover {
+          background-color: #c02020
+    }
+    ${direction && "float: " + direction}
+`;
 
-export default (props) => (
-    <div className={css`text-align: center;`}>
+const Navigation = (props) => (
+    <div css={textAlignStyles}>
       {props.next &&
-      <Link className={`${css`float: left;`} ${redButton}`} to={`/${props.path}/${props.next}`}> &laquo;Vorheriger {props.name}</Link>}
+      <Link css={redButton("left")} to={`/${props.path}/${props.next}`}> &laquo;Vorheriger {props.name}</Link>}
       {props.previous &&
-      <Link className={`${css`float: right`} ${redButton}`} to={`/${props.path}/${props.previous}`}> Nächster {props.name} &raquo;</Link>}
+      <Link css={redButton("right")} to={`/${props.path}/${props.previous}`}> Nächster {props.name} &raquo;</Link>}
   
-      <Link className={redButton} to={`/${props.path}/${props.parent}`}>Übersicht </Link>
+      <Link css={redButton()} to={`/${props.path}/${props.parent}`}>Übersicht </Link>
     </div>
-  )
+  );
+
+export {redButton};
+export default Navigation;

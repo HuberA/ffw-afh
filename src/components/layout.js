@@ -1,13 +1,14 @@
-import React from "react"
-import { css } from "react-emotion"
-import { StaticQuery, Link, graphql } from "gatsby"
+import React, { useState } from "react";
+import { Link } from "gatsby";
 import logo from "../images/logo-ffw.svg"
 import hamburgerMenu from "../images/hamburger_menu.svg"
-import Img from "gatsby-image"
+import { StaticImage } from "gatsby-plugin-image"
 import { rhythm } from "../utils/typography"
-import styles from "./button.module.css"
+/** @jsx jsx */
+import { jsx, css } from '@emotion/react'
 import { FaCaretDown } from 'react-icons/fa';
 
+// styles
 
 const logoHeight = 7;
 const fontSize = 1.2;
@@ -19,367 +20,329 @@ const hintergrundFarbe = '#F3F7F4';
 const hintergrundSelected = '#ddd';
 
 const maxPageWidth = 800;
-
 const bodyWidth = 1000;
 
-const _navbarLinkCss = css`
-display: block;
-color: gray;
-text-decoration: none;
-border: none;
-background: none;
-cursor: pointer;
-outline: none;
-padding: ${(logoHeight * hoverFactor + imagePaddingTop - fontSize)/2}rem ${horizontalPadding}rem;
-width:100%;
-@media (max-width: ${maxPageWidth}px){
-    display: flex;
-    padding: 1rem ${horizontalPadding}rem;
+const bottomFlorianHeight = 160;
+
+const pageStyles = css`
+    background-color: ${hintergrundFarbe};
+`;
+
+const setHeights = css`
+    min-height: calc(100vh - ${bottomFlorianHeight + 60}px);
+`;
+
+const topPanelStyles = css`
+    background-color: #ffffff;
+    margin: 0;
+    padding-top: 30px;
+    padding-bottom: 10px;
     text-align: center;
-    float: center;
-}
-`
-const activeCss = css`
-background-color: ${hintergrundSelected};
-color: black;
-`
-
-const navbarLinkCss = css(
-    {
-    ':hover': {
-        color: feuerwehrRot,
-        'background-color': '#fff'
-    },
-    'transition': ['ease-in-out color 0.15s', 'ease-in-out background-color 1s'],
-
-    },
-    _navbarLinkCss
-)
-const activeNavbarLinkCss = css(
-    {
-    ':hover': {
-        color: feuerwehrRot,
-    },
-    'transition': ['ease-in-out color 0.15s', 'ease-in-out background-color 1s'],
-
-    },
-    _navbarLinkCss,
-    activeCss
-)
-const navbarSubCss = css(
-    activeNavbarLinkCss,
-    css(`padding: 1rem 0;`)
-)
-
-const BottomLink = props => (
-    <div className={css`
-        float: left;
-        margin: 20px;
-        width: ${rhythm(10)};
-        margin-bottom: 0;
-        `}>
-          <Link className={css`
-            display: block;
-            color: gray;
-            text-decoration: none;
-            `}
-            to={props.to}>{props.text}</Link>
-    </div>
-)
-
-const dontDisplayOnSmall = css`
-@media (max-width: ${maxPageWidth}px){
-    display: none;
-}
-`
-const navbarLiCss = css`
-float: left;
-margin-bottom: 0;
-
-@media (max-width: ${maxPageWidth}px){
-    float: none;
-}
-`
-const NavbarSubItem = props => (
-    <Link className={navbarSubCss} to={props.to}>{props.name}</Link>
-)
-
-const NavbarItem = props => {
-    const displayThisMenu = props.visible && dontDisplayOnSmall
-    if(props.children){
-        const showDropdown = props.shownDropdown === props.name;
-        const displayStyle = showDropdown? 'block': 'none'; 
-        const linkCss = showDropdown? activeNavbarLinkCss: navbarLinkCss;
-        return(
-            <div className={`${navbarLiCss} ${displayThisMenu}`}
-                onMouseOver={() => props.handleDropdown(props.name)}
-                onMouseOut={() => props.handleDropdown(null)}>
-                <div>
-            <button className={linkCss} onClick={() => props.handleDropdown(props.name)}>
-               <>{props.name} </>
-                {<FaCaretDown/>}
-            </button>
-            </div>
-            <div className={css`
-                @media (min-width: ${maxPageWidth}px){
-                    position: absolute;
-                    min-width: 130px;
-                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                    z-index: 1;
-                }
-                background-color: ${hintergrundSelected};
-                padding-left: 8px;
-            `} style={{display: displayStyle}}>
-              {props.children}  
-            </div>
-            </div>
-        )
-    }else
-    return(
-    <div className={`${navbarLiCss} ${displayThisMenu}`}
-    >
-    <Link className={navbarLinkCss} to={props.link}>{props.name}</Link>
-    </div>
-);}
-
-
-
-class Layout extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            showMenu: true,
-            onTop: 0,
-            shownDropdown: null
-        };
-
-        this.handleMenuClick = this.handleMenuClick.bind(this);
-        this.handleDropdown = this.handleDropdown.bind(this);
+    @media (max-width: ${maxPageWidth}px){
+        display: none;
     }
-    handleMenuClick(){
-        this.setState(state => ({
-            showMenu: !state.showMenu
-        }));
-    }
-    scrollFunction(){
-        const top = document.body.scrollTop || document.documentElement.scrollTop;
-        this.setState(state => ({
-                onTop: top
-            }))
-        
-    }
-    tick(){
-        if (this.state.onTop < 20){
-            clearInterval(this.intervalHandle);
-            this.scroll(0)
-        }else{
-            this.scroll(0.8*this.state.onTop)
-        }
-    }
-    topFunction() {
-
-        this.intervalHandle = setInterval(() => this.tick(), 30); 
-        }
-    
-    scroll(val){
-        document.body.scrollTop = val;
-        document.documentElement.scrollTop = val;
-    }
-    componentDidMount(){
-        window.onscroll = () => this.scrollFunction()
-
-    }
-    handleDropdown(name){
-        
-        this.setState((state, props) => { 
-            return {shownDropdown: name};
-        });
-    }
-    render(){
-      return (
-  <StaticQuery
-   query={graphql`
-    query {
-        site {
-            siteMetadata {
-                title
-            }
-        }
-        image_florian: imageSharp(original: {src: {regex: "/.*/florian-.*/"}}){
-            original{
-              src
-            }
-        }
-        image_florian_grau: imageSharp(original: {src: {regex: "/.*/florian_grau-.*/"}}) {
-            fixed(height: 150
-                traceSVG: { background: "#f2f8f3", color: "#A81C1C" }
-                ){
-                ...GatsbyImageSharpFixed
-            }
-        }
-        
-          
-    }
-   `
-  }
-  render = {data => (
-    <div>
-    <div className={css`min-height: calc(100vh - 210px); background-color: ${hintergrundFarbe};`}>
-    {/* TOP PANEL */}
-    <div className={css`
-        background-color: #ffffff;
-        margin: 0;
-        padding-top: 30px;
-        padding-bottom: 10px;
-        text-align: center;
-    `+ ' ' + dontDisplayOnSmall}>
-        <div className={css`
-            max-width:${maxPageWidth}px;
-            margin: auto;
-            text-align: left;`}>
-                <Link to="/" className={css`
-                color: ${feuerwehrRot};
-                text-decoration: none;
-                font-size: 2.5rem;
-                margin-left: 8.5rem;
-                `}>
-                {data.site.siteMetadata.title}</Link>
-        </div>
-    </div>
-    {/* NAVIGATION */}
-    <div className={css`
+`;
+const topPanelChildStyles = css`
+    max-width:${maxPageWidth}px;
+    margin: auto;
+    text-align: left;
+`;
+const websiteTitleStyles = css`
+    color: ${feuerwehrRot};
+    text-decoration: none;
+    font-size: 2.5rem;
+    margin-left: 8.5rem;
+`;
+const navigationParentStyle = css`
     position: -webkit-sticky;
     position: sticky;
-    z-index: 1;
+    z-index: 10;
     top: 0;
     background-color: #ffffffe0;
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
-
     @media (max-width: ${maxPageWidth}px){
         position: static;
-
     }
-    `}
-    >
-    <div className={css`
-     position: absolute; 
-     right: 10px; 
-     width: 60px;
-     padding: 10px;
-     padding-bottom: 0;
-
-     @media (min-width: ${maxPageWidth}px){
-         display: none;
-     }
-    `} onClick={this.handleMenuClick}>
-    <img src={hamburgerMenu} alt=""/>
-    </div>
-    <div className={css`
+`;
+const mobileNavigationMenuStyle = css`
+    position: absolute; 
+    right: 10px; 
+    width: 60px;
+    padding: 10px;
+    padding-bottom: 0;
+    @media (min-width: ${maxPageWidth}px){
+        display: none;
+    }
+`;
+const navigationListStyle = (displayMenu) => {
+    const showOnSmallDisplay = displayMenu?`
+        @media (max-width: ${maxPageWidth}px){
+            display: none;
+        }
+    `:"";
+    return css`
         list-style-type: none;
         font-size: ${fontSize}rem;
         margin: 0 auto;
         max-width: ${maxPageWidth}px;
         padding: 0;
-        overflow: hidden;   
-    `}
-    >
-        <div className={css`
-            float: left;
+        overflow: hidden;
+        .menuItem {
+            align-items: center;
+            display: inline-block;
+            float: center;
             margin-bottom: 0;
-
             @media (max-width: ${maxPageWidth}px){
-                float: none;
+               width: 100%;
+               align-items: center;
+               text-align: center;
             }
-        `}
-        >
-            <Link className={css (
-                {
-                    'img:hover':{
-                        height: `${logoHeight * hoverFactor}rem`,
-                    },
-                }
-                ,css`
-                display:block;
-                text-align:center;
-                padding: 0 ${horizontalPadding}rem;
-                padding-top: ${imagePaddingTop}rem; 
-                margin: 0;
-                width: 130px;
-                transition: 1s;
-           `)}
-            to="/">
-                <img src={logo} alt="logo feuerwehr" className={css`height: ${logoHeight}rem; margin: 0;transition: 0.3s;`}></img>
-            </Link>
-        </div>
-            <NavbarItem name="Einsätze" link="/einsaetze/" visible={this.state.showMenu}/>
-            <NavbarItem name="Berichte" link="/berichte/" visible={this.state.showMenu}/>
-            <NavbarItem name="Feuerwehr" visible={this.state.showMenu} shownDropdown={this.state.shownDropdown} handleDropdown={this.handleDropdown}>
-                <NavbarSubItem to="/mannschaft" name="Mannschaft"/>
-                <NavbarSubItem to="/ausruestung" name="Ausrüstung" />
-            </NavbarItem>
-            <NavbarItem name="Jugendfeuerwehr" link="/jugendfeuerwehr/" visible={this.state.showMenu}/>
-            <NavbarItem name="Verein" link="/verein/" visible={this.state.showMenu}/>
-            <NavbarItem name="Kalender" link="/kalender/" visible={this.state.showMenu}/>
-    </div>
-    </div>
-    <div className={css`
+        
+        ${showOnSmallDisplay}
+        }
+    `
+};
+const navigationWappenContainerStyle = css`
+    float: left;
+    margin-bottom: 0;
+    @media (max-width: ${maxPageWidth}px){
+        float: none;
+}
+`;
+const navigationWappenStyle = css`
+    display:block;
+    text-align:center;
+    padding: 0 ${horizontalPadding}rem;
+    padding-top: ${imagePaddingTop}rem; 
+    margin: 0;
+    width: 130px;
+    transition: 1s;
+    img {
+        height: ${logoHeight}rem; 
+        margin: 0;
+        transition: 0.3s;
+    }
+    img:hover {
+        height: ${logoHeight*hoverFactor}rem;
+    }
+   
+`;
+const navigationLinkStyles = css`
+    :hover {
+        color: ${feuerwehrRot};
+        background-color: ${hintergrundSelected};
+    }
+    transition: ease-in-out color 0.15s, ease-in-out background-color 1s;
+    background-color: 0xfff;
+    display: block;
+    color: gray;
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    padding: ${(logoHeight * hoverFactor + imagePaddingTop - fontSize)/2}rem ${horizontalPadding}rem;
+    width:100%;
+    box-sizing: border-box;
+    @media (max-width: ${maxPageWidth}px){
+        display: flex;
+        padding: 1rem ${horizontalPadding}rem;
+        float: center;
+    }
+`;
+const navigationItemSelectionStyles = (showDropdown) => showDropdown?css`
+    color: ${feuerwehrRot};
+    background-color: ${hintergrundSelected};
+`:css``;
+const navigationSubItemsStyles = (showDropdown) =>css`
+    @media (min-width: ${maxPageWidth}px){
+        position: absolute;
+        min-width: 134px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    background-color: ${hintergrundSelected};
+    padding-left: 8px;
+    display: ${showDropdown?'block':'none'};
+    a {
+        padding: 1rem 0;
+        display: block;
+        text-align: left;
+    }
+`;
+const mainPanelParentStyles = css`
     background-color: ${hintergrundFarbe};
-    `}
-    >
-    {/* MAIN PANEL */}
-    <div className={css`
+`;
+const mainPanelStyles = css`
     margin: auto;
     max-width: ${bodyWidth}px;
-    min-height: ${this.props.minHeight};
     padding: ${rhythm(2)};
     padding-top: ${rhythm(1.5)};
     overflow: auto;
     @media (max-width: ${maxPageWidth}px){
         padding: ${rhythm(0.5)};
     }
-    `} 
-    >
-        {this.props.children}
-        </div>
-        </div>
-    </div>   
-    <footer className={css`
-            background-color: ${hintergrundFarbe};
-            text-align: center;
-            height: 200px;
-        `}>
-        <div className={css`
-            max-width: ${bodyWidth}px;
-            margin: 0 auto;
-        `}>
-      <div className={css`
-        float: left;
-        margin-bottom: 0;
-        width: ${rhythm(8)};
-        text-align: center;
-      `}>
-        <Img fixed={data.image_florian_grau.fixed} alt="florian" className={css`margin-bottom: 0;`}/>
-        <p className={css`margin-bottom: 0;`}/>
-        <small className="d-block mb-3 text-muted">&copy; Freiwillige Feuerwehr Altfraunhofen 2018</small>
-      </div>
-      <BottomLink to="/impressum" text="Impressum" />
-      <BottomLink to="/datenschutz" text="Datenschutz" />
-      <BottomLink to="/anfahrt" text="Anfahrt" />
-      <BottomLink to="/neumitglied" text="Werde Mitglied!"/>
-      <BottomLink to="/mitteilungen" text="Benachrichtigungen"/>
-      {this.state.onTop > 20 && 
-        <button className={`${styles.redbtnbtn} ${styles.bottomright}`} onClick={() => this.topFunction()} title="Gehe Hoch">Hoch</button>}
-      </div>
-</footer> 
-    
- 
-    </div>
-  )
-}
-  />
-);
+`;
+const footerStyles = css`
+    background-color: ${hintergrundFarbe};
+    text-align: center;
+    height: 200px;
+    div {
+        max-width: ${bodyWidth}px;
+        margin: 0 auto;
     }
+`;
+const footerContentStyles = css`
+    float: left;
+    margin-bottom: 0;
+    width: ${rhythm(8)};
+    text-align: center;
+    img {
+        margin-bottom: 0;
+    }
+    p {
+        margin-bottom: 0;
+    }
+    small {
+        d-block mb-3 text-muted
+    }
+`;
+const bottomLinkStyles = css`
+    float: left;
+    margin: 20px;
+    width: ${rhythm(10)};
+    margin-bottom: 0;
+    a {
+        display: block;
+        color: gray;
+        text-decoration: none;
+    }
+`;
+
+// data
+
+const links = [
+    {
+      name: "Einsätze",
+      link: "/einsaetze",
+    },
+    {
+        name: "Berichte",
+        link: "/berichte",
+    },
+    {
+        name: "Feuerwehr",
+        children: [
+            {
+                "name": "Mannschaft",
+                "link": "/mannschaft",
+            },
+            {
+                "name": "Ausrüstung",
+                "link": "/ausruestung",
+            }
+        ],
+    },
+    {
+        name: "Jugendfeuerwehr",
+        link: "/jugendfeuerwehr",
+    },
+    {
+        name: "Verein",
+        link: "/verein",
+    },
+    {
+        name: "Kalender",
+        link: "/kalender",
+    }
+];
+
+const bottomLinks = [
+    {
+        name: "Impressum",
+        link: "/impressum",
+    },
+    {
+        name: "Datenschutz",
+        link: "/datenschutz",
+    },
+    {
+        name: "Anfahrt",
+        link: "/anfahrt",
+    },
+    {
+        name: "Werde Mitglied!",
+        link: "/neumitglied",
+    }
+];
+
+const endWithSlash = (text) => text.endsWith("/")?text:`${text}/`;
+
+// markup
+function LayoutComponent (props) {
+    const [showMenu, setShowMenu] = useState(true);
+    //const [onTop, setOnTop] = useState(0);
+    const [shownDropdown, setShownDropdown] = useState(null);
+    return (
+        <main css={pageStyles}>
+            <div css={setHeights}>
+                <div css={topPanelStyles}>
+                    <div css={topPanelChildStyles}>
+                        <Link to="/" css={websiteTitleStyles}>Freiwillige Feuerwehr Altfraunhofen</Link>
+                    </div>
+                </div>
+                <div css={navigationParentStyle}>
+                    <div css={mobileNavigationMenuStyle} onClick={()=>setShowMenu(!showMenu)}>
+                        <img src={hamburgerMenu} alt=""/>
+                    </div>
+                    <div css={navigationListStyle(showMenu)}>
+                        <div css={navigationWappenContainerStyle}>
+                            <Link css={navigationWappenStyle} to="/">
+                                <img src={logo} alt="Wappen Feuerwehr"/>
+                            </Link>
+                        </div>
+                        {links.map(link => (link.children)?(
+                            <div key = {link.link} className="menuItem" css={navigationItemSelectionStyles(shownDropdown === link.name)} onMouseOver={() => setShownDropdown(link.name)} onMouseOut={() => setShownDropdown(null)}>
+                                <button css={navigationLinkStyles}>
+                                        {link.name} <FaCaretDown/>
+                                </button>
+                                <div css={navigationSubItemsStyles(shownDropdown === link.name)}>
+                                    {link.children.map(childLink => (
+                                        <Link css={navigationLinkStyles} to={childLink.link}>{childLink.name}</Link>
+                                    ))}
+                                </div>
+                            </div>
+                        ):(
+                            <div className="menuItem">
+                                <Link css={navigationLinkStyles} key={link.link} to={endWithSlash(link.link)}>{link.name}</Link>
+                            </div>
+                        ))}
+
+                    </div>
+                </div>
+                <div css={mainPanelParentStyles}>
+                    <div css={mainPanelStyles}>
+                            {props.children}
+                    </div>
+                </div>
+            </div>
+            <footer css={footerStyles}>
+                <div>
+                    <div css={footerContentStyles}>
+                        <StaticImage src="../images/florian_grau.jpg" alt="Florian" placeholder="tracedSVG" tracedSVGOptions={{color: feuerwehrRot, background:hintergrundFarbe}} height={bottomFlorianHeight} />
+                        <p/>
+                        <small>&copy; Freiwillige Feuerwehr Altfraunhofen 2018-2021</small>
+                    </div>
+                    {bottomLinks.map(link => (
+                        <div key={link.link} css={bottomLinkStyles}>
+                            <Link to={link.link}>{link.name}</Link>
+                        </div>
+                    ))}
+                </div>
+            </footer>
+        </main>
+    )
 }
 
-export default Layout;
+export {LayoutComponent, hintergrundFarbe, feuerwehrRot}

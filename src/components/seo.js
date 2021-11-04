@@ -4,7 +4,7 @@ import favicon from "../images/logo-ffw.svg"
 
 
 
-export default props => {
+const Seo = props => {
     const title =props.title
     const title_long =props.title
     const image = props.image && (props.image.startsWith("//"))?`http:${props.image}`:`http://feuerwehr-altfraunhofen.de${props.image}`
@@ -41,4 +41,6 @@ export default props => {
             <meta name="twitter:image" content={image} />}
             <meta name="twitter:description" content={props.description_long} />
         </Helmet>
-)}
+)};
+
+export default Seo;

@@ -1,13 +1,13 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Layout from "../components/layout"
+import {LayoutComponent} from "../components/layout"
 import Seo from "../components/seo"
 
 
-export default ({ data }) => {
+const Aktuelles = ({ data }) => {
     const post = data.markdownRemark
     return (
-    <Layout>
+    <LayoutComponent>
         <Seo title={`${post.frontmatter.title} - Feuerwehr Altfraunhofen`} 
                  description_short={post.excerpt}
                  description_long={post.excerpt} 
@@ -19,21 +19,22 @@ export default ({ data }) => {
                        width="100%" />}
             <div dangerouslySetInnerHTML={{ __html: post.html}} />
         </div>
-    </Layout>
+    </LayoutComponent>
     )
-}
+};
+export default Aktuelles;
 
 export const query = graphql`
-query($slug: String!){
-    markdownRemark(fields: {slug: {eq: $slug}}) {
-          frontmatter{
-            title
-          }
-          fields {
-            slug
-          }
-          html
-          excerpt(pruneLength: 155)
-        }
+query ($slug: String!) {
+  markdownRemark(fields: {slug: {eq: $slug}}) {
+    frontmatter {
+      title
+    }
+    fields {
+      slug
+    }
+    html
+    excerpt(pruneLength: 155)
   }
+}
 `

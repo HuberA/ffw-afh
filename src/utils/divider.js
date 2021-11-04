@@ -1,8 +1,8 @@
 import React from "react"
-import { css } from "react-emotion"
+import { jsx, css } from '@emotion/react'
 
-export default () => (
-    <hr className={css`
+const Divider = () => (
+    <hr css={css`
         display: block;
         height: 0.5px;
         border: 0;
@@ -10,4 +10,6 @@ export default () => (
         margin: 1em 0;
         padding: 0
     `}/>
-)
+);
+
+export default Divider;
