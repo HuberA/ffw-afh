@@ -41,15 +41,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
-      allMarkdownRemark(filter: { fileAbsolutePath: { ne: null } }) {
-        edges {
-          node {
-            fields {
-              slug
-            }
-          }
-        }
-      }
       allContentfulArtikel(sort: { fields: [datum], order: DESC }) {
         edges {
           node {
@@ -82,6 +73,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
+     
     }
   `);
   if (result.errors) {
@@ -143,15 +135,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     });
   }
-  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    createPage({
-      path: node.fields.slug,
-      component: aktuellesTemplate,
-      context: {
-        slug: node.fields.slug,
-      },
-    });
-  });
   result.data.allContentfulArtikel.edges.forEach(({ node, next, previous }) => {
     createPage({
       path: `/berichte/${node.slug}/`,
