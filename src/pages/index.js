@@ -31,6 +31,10 @@ const redButtonStyle = css`
   display: inline-block;
 `;
 
+const subHeaderStyle = css`
+  text-align: center
+`;
+
 const divContainerStyles = css`
   overflow: auto;
 `;
@@ -153,8 +157,12 @@ const IndexPage = () => {
         />
       </div>
       <Divider />
+      <h2 css={subHeaderStyle}>Aktuelles</h2>
+      
+      <AktuellesList limit="3" divider={Divider} />
+      <Divider />
       <div css={einsaetzeStyles}>
-        <h3>Letzte Einsätze</h3>
+        <h2 css={subHeaderStyle}>Letzte Einsätze</h2>
         {einsaetze.map(({ node }) => {
           const einsatz = node;
           const image = (
@@ -183,9 +191,6 @@ const IndexPage = () => {
         })}
       </div>
 
-      <h3>Aktuelles</h3>
-      <Divider />
-      <AktuellesList limit="3" divider={Divider} />
     </LayoutComponent>
   );
 };

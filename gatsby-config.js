@@ -55,5 +55,12 @@ module.exports = {
       },
       __key: "pages",
     },
+    {
+      resolve: `gatsby-source-ical`,
+      options: {
+        name: `vereins-kalender`,
+        url: `https://app.divera247.com/api/v2/events/ics?accesskey=FDl5vwsCIjNLwodFXKMQ-biWDZppdeyRLMIoF5TSEo1Ww2hyU0NIm2BQZBJffllS&ucr=628582`,
+      },
+    },
   ],
 };

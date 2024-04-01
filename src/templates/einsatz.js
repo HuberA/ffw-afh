@@ -136,12 +136,6 @@ const Einsatz = (props) => {
               <td>{einsatz.einsatzleiter}</td>
             </tr>
           )}
-          {einsatz.mannschatfsstaerke && (
-            <tr>
-              <td>Mannschaftsstärke:</td>
-              <td>{einsatz.mannschatfsstaerke}</td>
-            </tr>
-          )}
           {alarmierte_einheiten && (
             <tr>
               <td>Alarmierte Einheiten:</td>
@@ -245,7 +239,6 @@ export const pageQuery = graphql`
         gatsbyImageData(layout: CONSTRAINED, width: 1000, height: 800)
         fixed: gatsbyImageData(layout: FIXED, width: 600)
       }
-      mannschatfsstaerke
       einsatzortGeo {
         lon
         lat

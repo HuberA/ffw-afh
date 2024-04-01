@@ -332,7 +332,7 @@ function LayoutComponent (props) {
                     <div css={footerContentStyles}>
                         <StaticImage src="../images/florian_grau.jpg" alt="Florian" placeholder="tracedSVG" tracedSVGOptions={{color: feuerwehrRot, background:hintergrundFarbe}} height={bottomFlorianHeight} />
                         <p/>
-                        <small>&copy; Freiwillige Feuerwehr Altfraunhofen 2018-2021</small>
+                        <small>&copy; Freiwillige Feuerwehr Altfraunhofen 2018-{new Date().getFullYear()}</small>
                     </div>
                     {bottomLinks.map(link => (
                         <div key={link.link} css={bottomLinkStyles}>
