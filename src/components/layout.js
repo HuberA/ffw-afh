@@ -11,7 +11,7 @@ import { FaCaretDown } from 'react-icons/fa';
 // styles
 
 const logoHeight = 7;
-const fontSize = 1.2;
+const fontSize = 1.1;
 const imagePaddingTop = 0;
 const horizontalPadding = 0.5;
 const hoverFactor = 1.05;
@@ -245,12 +245,16 @@ const links = [
         ],
     },
     {
-        name: "Jugendfeuerwehr",
+        name: "Jugend",
         link: "/jugendfeuerwehr",
     },
     {
         name: "Verein",
         link: "/verein",
+    },
+    {
+        name: "Gründungsfest",
+        link: "/gruendungsfest",
     },
     {
         name: "Kalender",
