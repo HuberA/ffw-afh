@@ -28,10 +28,9 @@ const terminView = ({ data }) => {
     .setZone("Europe/Berlin")
     .setLocale("de");
   const showStartTime = datum.hour != 0 || datum.minute != 0;
- 
-  const nextDay = datum.plus({days:1});
+
+  const nextDay = datum.plus({ days: 1 });
   const isWholeDay = endDate.year === nextDay.year && endDate.month === nextDay.month && endDate.day === nextDay.day && datum.hour === 0 && datum.minute === 0;
-  console.log(`is whole day: ${isWholeDay} ${endDate.minus({ days: 1 }) } vs ${datum}, hour: ${datum.hour}, ${datum.minute} ${endDate.minus({ days: 1 }) === datum} ${datum.hour === 0} ${datum.minute === 0}`)
   const isSameDay = endDate.day == datum.day && endDate.month == datum.month && endDate.year == datum.year;
 
   let tableData = [
@@ -49,20 +48,20 @@ const terminView = ({ data }) => {
         </div>,
       ],
     },];
-  if (!isWholeDay){
+  if (!isWholeDay) {
     tableData.push({
       id: "ende",
-      data: [<div>Ende</div>,  <div>
-      {!isSameDay && <p css={noBottomMargin}>
-        {endDate.toLocaleString(dayFormatOptions)}
-      </p>}
-      {showStartTime && <p css={noBottomMargin}>
-        {endDate.toLocaleString(timeFormatOptions) + " Uhr"}
-      </p>}
-    </div>,]
+      data: [<div>Ende</div>, <div>
+        {!isSameDay && <p css={noBottomMargin}>
+          {endDate.toLocaleString(dayFormatOptions)}
+        </p>}
+        {showStartTime && <p css={noBottomMargin}>
+          {endDate.toLocaleString(timeFormatOptions) + " Uhr"}
+        </p>}
+      </div>,]
     })
   }
-  if(termin.description != null){
+  if (termin.description != null) {
     tableData.push(
       {
         id: "beschreibung",
