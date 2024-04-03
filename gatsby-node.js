@@ -78,7 +78,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return;
   }
 
-  const aktuellesTemplate = path.resolve(`./src/templates/aktuelles.js`);
   const berichtTemplate = path.resolve(`./src/templates/bericht.js`);
   const einsatzTemplate = path.resolve(`./src/templates/einsatz.js`);
   const einsaetzeTemplate = path.resolve(`./src/templates/einsaetze.js`);
@@ -143,7 +142,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     });
   });
- 
+
   result.data.allIcal.edges.forEach(({ node }) => {
     createPage({
       path: `/termine/${node.id}/`,
@@ -153,6 +152,19 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     });
   });
+  const response = await fetch("https://app.divera247.com/api/v2/events/ics?accesskey=FDl5vwsCIjNLwodFXKMQ-biWDZppdeyRLMIoF5TSEo1Ww2hyU0NIm2BQZBJffllS&ucr=628582")
+  const response_text = await response.text()
+  const matches = [...response_text.matchAll(/LAST-MODIFIED:(\d{4})([01]\d)([0-3]\d)T([0-2]\d)([0-5]\d)([0-5]\d)Z/g)];
+  const date = new Date(Math.max(...matches.map(match => Date.parse(`${match[1]}-${match[2]}-${match[3]}T${match[4]}:${match[5]}:${match[6]}`))));
+  console.log('Latest calendar change:', date.toISOString())
+
+  calendarHashPath = path.posix.join(process.cwd(), DEPLOY_DIR, '/kalender/latest_change.txt')
+  fs.writeFile(calendarHashPath, date.toISOString(), function (err) {
+    if (err) {
+      return console.log(err);
+    }
+  })
+
 };
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {

@@ -21,10 +21,10 @@ const noBottomMargin = css`
 
 const terminView = ({ data }) => {
   const termin = data.ical;
-  const datum = DateTime.fromISO(termin.start)
+  const datum = DateTime.fromISO(termin.start, { zone: 'utc' })
     .setZone("Europe/Berlin")
     .setLocale("de");
-  const endDate = DateTime.fromISO(termin.end)
+  const endDate = DateTime.fromISO(termin.end, { zone: 'utc' })
     .setZone("Europe/Berlin")
     .setLocale("de");
   const showStartTime = datum.hour != 0 || datum.minute != 0;

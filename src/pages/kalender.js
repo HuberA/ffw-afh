@@ -71,7 +71,7 @@ const Calender = () => {
           { title: "Kategorie" },
         ]}
         data={data.allIcal.edges.map(({ node }, index) => {
-          const datum = DateTime.fromISO(node.start)
+          const datum = DateTime.fromISO(node.start, { zone: 'utc' })
             .setZone("Europe/Berlin")
             .setLocale("de");
           const next_day = datum.plus({ days: 1 });
@@ -85,22 +85,22 @@ const Calender = () => {
                 <p css={noBottomMarginStyle}>
                   {datum.toLocaleString(dayFormatOptions)}
                 </p>
-                {showStartTime &&<p css={noBottomMarginStyle}>
+                {showStartTime && <p css={noBottomMarginStyle}>
                   {datum.toLocaleString(timeFormatOptions) + " Uhr"}
                 </p>}
               </TerminLink>,
               <TerminLink id={node.id}>{node.summary}</TerminLink>,
               <TerminLink id={node.id}>{node.location}</TerminLink>,
-              <TerminLink id={node.id}>{(node.sourceInstanceName == "vereins-kalender")?"Verein":""}</TerminLink>,
+              <TerminLink id={node.id}>{(node.sourceInstanceName == "vereins-kalender") ? "Verein" : ""}</TerminLink>,
             ],
           };
         })}
         columnsFilter={(width) =>
-           width > 720
-              ? [0, 1, 2, 3]
-              : width > 650
-                ? [0, 1, 2]
-                : [0, 1]
+          width > 720
+            ? [0, 1, 2, 3]
+            : width > 650
+              ? [0, 1, 2]
+              : [0, 1]
         }
       />
     </LayoutComponent>
