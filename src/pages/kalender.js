@@ -71,8 +71,8 @@ const Calender = () => {
           { title: "Kategorie" },
         ]}
         data={data.allIcal.edges.map(({ node }, index) => {
+          console.log('node start:', node.start);
           const datum = DateTime.fromISO(node.start, { zone: 'utc' })
-            .setZone("Europe/Berlin")
             .setLocale("de");
           const next_day = datum.plus({ days: 1 });
           if (next_day < new Date()) return null;

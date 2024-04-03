@@ -12,13 +12,12 @@ export default async (req) => {
     const matches = [...result.matchAll(/LAST-MODIFIED:(\d{4})([01]\d)([0-3]\d)T([0-2]\d)([0-5]\d)([0-5]\d)Z/g)];
     const date = new Date(Math.max(...matches.map(match => Date.parse(`${match[1]}-${match[2]}-${match[3]}T${match[4]}:${match[5]}:${match[6]}`))));
     console.log('max date:', date.toISOString())
-    const website_response = await fetch(`${Netlify.env.get(URL)}/kalender/latest_change.txt`)
+    const website_response = await fetch(`${Netlify.env.get("URL")}/latest_change.txt`)
     const website_date = Date.parse(await website_response.text())
 
     if (website_date < date) {
         console.log('trigger rebuild!!');
         await fetch("https://api.netlify.com/build_hooks/660dc8d88d457f4a6eba3454", { method: "POST" });
-        Netlify.env.set("CALENDAR_HASH", hashHex);
     } else {
         console.log('Calendar already known.')
     }
