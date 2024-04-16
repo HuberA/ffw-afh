@@ -158,8 +158,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const date = new Date(Math.max(...matches.map(match => Date.parse(`${match[1]}-${match[2]}-${match[3]}T${match[4]}:${match[5]}:${match[6]}`))));
   console.log('Latest calendar change:', date.toISOString())
 
-  calendarHashPath = path.posix.join(process.cwd(), DEPLOY_DIR, '/latest_change.txt')
-  fs.writeFile(calendarHashPath, date.toISOString(), function (err) {
+  calendarHashPath = path.posix.join(process.cwd(), DEPLOY_DIR, '/calendar.ics')
+  fs.writeFile(calendarHashPath, response_text, function (err) {
     if (err) {
       return console.log(err);
     }
