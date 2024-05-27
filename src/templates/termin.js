@@ -68,10 +68,7 @@ const terminView = ({ data }) => {
     );
   }
   tableData.push(...[
-    {
-      id: "ort",
-      data: [<div>Ort</div>, <div>{termin.location}</div>],
-    },
+   
     {
       id: "kategorie",
       data: [<div>Kategorie</div>, <div>{(termin.sourceInstanceName === "vereins-kalender") ? "Verein" : ""}</div>],
@@ -110,7 +107,6 @@ query ($id: String) {
     start
     end
     description
-    location
     summary
     sourceInstanceName
   }

@@ -44,7 +44,6 @@ const Calender = () => {
               start
               end
               summary
-              location
               id
               uid
               description
@@ -67,7 +66,6 @@ const Calender = () => {
         header={[
           { title: "Datum", width: "100px" },
           { title: "Beschreibung" },
-          { title: "Veranstaltungsort" },
           { title: "Kategorie" },
         ]}
         data={data.allIcal.edges.map(({ node }, index) => {

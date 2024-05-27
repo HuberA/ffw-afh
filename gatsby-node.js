@@ -58,16 +58,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       allIcal(sort: {fields: start}) {
         edges {
           node {
-            start
-            end
-            summary
-            location
             id
-            uid
-            description
-            type
-            sourceInstanceName
-            dtstamp
           }
         }
       }
