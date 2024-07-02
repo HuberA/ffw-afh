@@ -182,7 +182,6 @@ const IndexPage = () => {
                     .setLocale("de")
                     .toLocaleString(formatOptions)}
                 </p>
-                <p>{einsatz.einsatzbericht.childMarkdownRemark.excerpt}</p>
                 <div css={redButtonStyle}>Mehr Details &raquo;</div>
                 <p />
               </div>
