@@ -51,24 +51,26 @@ class Map extends React.Component {
         ppi: pixelRatio === 1 ? undefined : 320,
       });
 
+      // Create a map using the vector map layer (normal.day)
       this.map = new this.H.Map(
         document.getElementById("map"),
-        defaultLayers.raster.satellite.map,
+        defaultLayers.vector.normal.map,  // Use the vector map instead of satellite
         {
           pixelRatio: pixelRatio,
           center: fwHausCoords,
           zoom: 13,
         }
       );
-      this.map.setBaseLayer(defaultLayers.raster.satellite.map);
 
-      //const behavior = new this.H.mapevents.Behavior(new this.H.mapevents.MapEvents(this.map));
+      // Set the base layer to vector map (normal.day)
+      this.map.setBaseLayer(defaultLayers.vector.normal.map);  // Using the vector base layer
 
       this.ui = this.H.ui.UI.createDefault(this.map, defaultLayers, "de-DE");
     } else {
       this.map.removeObjects(this.mapObjects);
       this.mapObjects = [];
     }
+    
     if (this.props.lat && this.props.lng) {
       this.calculateRouteFromAtoB();
     } else {
@@ -84,7 +86,9 @@ class Map extends React.Component {
       this.map.addObject(group);
       new this.H.mapevents.Behavior(new this.H.mapevents.MapEvents(this.map));
     }
-  }
+}
+
+
   calculateRouteFromAtoB() {
     const router = this.platform.getRoutingService(null, 8);
     const routeRequestParams = {

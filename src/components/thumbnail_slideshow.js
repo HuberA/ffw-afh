@@ -23,6 +23,7 @@ const slideshowStyles = css`
   /* Position the image container (needed to position the left and right arrows) */
   .container {
     position: relative;
+    max-width: 100%; /* Ensure the container is responsive */
   }
 
   /* Hide the images by default */
@@ -94,7 +95,7 @@ const slideshowStyles = css`
     width: 16.66%;
   }
 
-  /* Add a transparency effect for thumnbail images */
+  /* Add a transparency effect for thumbnail images */
   .demo {
     opacity: 0.6;
   }
@@ -112,18 +113,22 @@ class Slideshow extends React.Component {
       slideIndex: 0,
     };
   }
+
   plusSlides(n) {
     const l = this.props.images.length;
     this.setState((state) => ({
       slideIndex: (this.state.slideIndex + n + l) % l,
     }));
   }
+
   currentSlide(n) {
     this.setState({ slideIndex: n });
   }
+
   handleSwipe(a) {
     this.plusSlides(-Math.sign(a.deltaX));
   }
+
   render() {
     const images = this.props.images.filter((i) => i !== null);
     if (images.length === 1)
@@ -131,6 +136,12 @@ class Slideshow extends React.Component {
         <GatsbyImage
           image={images[0].gatsbyImageData}
           backgroundColor={feuerwehrRot}
+          alt={images[0].gatsbyImageData}
+          style={{
+            width: "100%", // Ensure it takes full width of its container
+            height: "auto", // Maintain aspect ratio
+            objectFit: "contain", // Prevent stretching or cropping
+          }}
         />
       );
     else if (images.length > 0)
@@ -149,19 +160,20 @@ class Slideshow extends React.Component {
                   {index + 1} / {images.length}
                 </div>
                 <Hammer onSwipe={(a) => this.handleSwipe(a)}>
-                <div>
-                  <GatsbyImage
-                    image={image.gatsbyImageData}
-                    backgroundColor={feuerwehrRot}
-                    alt={image.title}
-                    style={{
-                      display: "block",
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      width: "max-content",
-                      height: "max-content",
-                    }}
-                  />
+                  <div>
+                    <GatsbyImage
+                      image={image.gatsbyImageData}
+                      backgroundColor={feuerwehrRot}
+                      alt={image.title}
+                      style={{
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        width: "100%", // Make the image responsive
+                        height: "auto", // Maintain aspect ratio
+                        objectFit: "contain", // Ensure no cropping or distortion
+                      }}
+                    />
                   </div>
                 </Hammer>
               </div>
@@ -190,9 +202,8 @@ class Slideshow extends React.Component {
                   onClick={(e) => this.currentSlide(index)}
                 >
                   <GatsbyImage
-                    className={`${styles.demo} ${styles.cursor} ${
-                      this.state.slideIndex === index ? styles.active : ""
-                    }`}
+                    className={`${styles.demo} ${styles.cursor} ${this.state.slideIndex === index ? styles.active : ""
+                      }`}
                     image={img.thumb}
                     alt={img.title}
                   />

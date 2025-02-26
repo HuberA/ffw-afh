@@ -160,7 +160,7 @@ const IndexPage = () => {
       <h2 css={subHeaderStyle}>Aktuelles</h2>
       
       <AktuellesList limit="3" divider={Divider} />
-      <Divider />
+      {/* <Divider /> 
       <div css={einsaetzeStyles}>
         <h2 css={subHeaderStyle}>Letzte Einsätze</h2>
         {einsaetze.map(({ node }) => {
@@ -188,7 +188,7 @@ const IndexPage = () => {
             </Link>
           );
         })}
-      </div>
+      </div> */}
 
     </LayoutComponent>
   );
