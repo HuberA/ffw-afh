@@ -23,8 +23,8 @@ const urls = [
 
 // data
 
-const fwHausLat = 48.449863;
-const fwHausLng = 12.17739;
+const fwHausLat = 48.4539932;
+const fwHausLng = 12.1769923;
 const fwHausCoords = { lat: fwHausLat, lng: fwHausLng };
 
 // markup

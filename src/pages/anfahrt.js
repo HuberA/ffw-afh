@@ -16,7 +16,7 @@ const AnfahrtPage = () => (
     <p>
       Freiwillige Feuerwehr Altfrauhofen e.V.
       <br />
-      Geisenhausener Straße 23
+      Obergangkofener Straße 8
       <br />
       84169 Altfraunhofen
     </p>
